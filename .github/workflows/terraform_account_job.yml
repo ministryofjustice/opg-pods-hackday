@@ -28,12 +28,12 @@ jobs:
       - name: Lint Terraform
         id: tf_lint
         run: terraform fmt -check -recursive
-        working-directory: ./terraform/account
+        working-directory: ./service-add-lpa-to-pod/terraform/account
         continue-on-error: true
 
       - name: Terraform Init
         run: terraform init -input=false
-        working-directory: ./terraform/account
+        working-directory: ./service-add-lpa-to-pod/terraform/account
 
       - name: Terraform Plan
         env:
@@ -41,7 +41,7 @@ jobs:
         run: |
           terraform workspace show
           terraform plan -input=false -parallelism=30
-        working-directory: ./terraform/account
+        working-directory: ./service-add-lpa-to-pod/terraform/account
 
       - name: Terraform Apply
         env:
@@ -49,4 +49,4 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           terraform apply -lock-timeout=300s -input=false -auto-approve -parallelism=30
-        working-directory: ./terraform/account
+        working-directory: ./service-add-lpa-to-pod/terraform/account
