@@ -52,4 +52,8 @@ module.exports = router => {
             } 
         });
     });
+
+    router.get("/lpa/send-to-pod", function(req, res) {
+        res.render("send-to-pod", {});
+    });
 };
