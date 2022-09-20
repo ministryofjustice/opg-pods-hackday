@@ -3,7 +3,7 @@ resource "aws_lb_target_group" "app" {
   port                 = 80
   protocol             = "HTTP"
   target_type          = "ip"
-  vpc_id               = data.aws_vpc.default.id
+  vpc_id               = data.aws_vpc.main.id
   deregistration_delay = 0
   depends_on           = [aws_lb.app]
 
@@ -20,7 +20,7 @@ resource "aws_lb" "app" {
   internal                   = false #tfsec:ignore:AWS005 - public alb
   load_balancer_type         = "application"
   drop_invalid_header_fields = true
-  subnets                    = data.aws_subnets.public.ids
+  subnets                    = data.aws_subnet.public.*.id
   enable_deletion_protection = false
   security_groups            = [aws_security_group.app_loadbalancer.id]
   provider                   = aws.eu_west_1
@@ -71,7 +71,7 @@ resource "aws_lb_listener_certificate" "app_loadbalancer_live_service_certificat
 resource "aws_security_group" "app_loadbalancer" {
   name_prefix = "${local.environment_name}-add-lpa-to-pod-app-loadbalancer"
   description = "app service application load balancer"
-  vpc_id      = data.aws_vpc.default.id
+  vpc_id      = data.aws_vpc.main.id
   lifecycle {
     create_before_destroy = true
   }
