@@ -1,0 +1,31 @@
+{% if data.acting === 'cp' %}
+<div class="govuk-phase-banner" style="background-color: #f6d7d2;">
+    <p class="govuk-phase-banner__content"><strong class="govuk-tag govuk-phase-banner__content__tag" style="background-color: #d4351c;">
+        CP
+      </strong>
+      <span class="govuk-phase-banner__text">
+        This part of the journey is for the certificate provider
+      </span>
+    </p>
+</div>
+{% elseif data.acting === 'donor' %}
+<div class="govuk-phase-banner" style="background-color: #d2e2f1;">
+    <p class="govuk-phase-banner__content"><strong class="govuk-tag govuk-phase-banner__content__tag ">
+        DONOR
+      </strong>
+      <span class="govuk-phase-banner__text">
+        This part of the journey is for the donor
+      </span>
+    </p>
+</div>
+{% else %}
+<div class="govuk-phase-banner">
+  <p class="govuk-phase-banner__content"><strong class="govuk-tag govuk-phase-banner__content__tag ">
+      PROTOTYPE
+    </strong>
+    <span class="govuk-phase-banner__text">
+      This is a prototype – this is not a real service.
+    </span>
+  </p>
+</div>
+{% endif %}

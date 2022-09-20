@@ -1,0 +1,18 @@
+{% if decisionLog %}
+<div class="page-log">
+  <div class="govuk-width-container ">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <details class="govuk-details" data-module="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              Page notes
+            </span>
+          </summary>
+            {{ decisionLog | safe }}
+        </details>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}

@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Details
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+      text: "Back",
+      href: "/dashboard"
+    })
+  }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {{ govukPanel({
+      titleText: data.lpa.donor.fullname + "'s " + data.lpa.lpaType + " LPA"
+    }) }}
+
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: {
+            text: "Donor"
+          },
+          value: {
+            text: data.lpa.donor.fullname
+          }
+        },
+        {
+          key: {
+            text: "First attorney"
+          },
+          value: {
+            text: data.lpa.attorney.fullname
+          }
+        },
+        {
+          key: {
+            text: "Second attorney"
+          },
+          value: {
+            text: data.lpa.attorney2.fullname
+          }
+        },
+        {
+          key: {
+            text: "Replacement attorney"
+          },
+          value: {
+            text: data.lpa.replacementAttorney.fullname
+          }
+        },
+        {
+          key: {
+            text: "Type"
+          },
+          value: {
+            text: data.lpa.lpaType
+          }
+        },
+        {
+          key: {
+            text: "Instructions"
+          },
+          value: {
+            text: data.lpa.decisions.instructions
+          }
+        },
+        {
+          key: {
+            text: "Preferences"
+          },
+          value: {
+            text: data.lpa.decisions.preferences
+          }
+        },
+        {
+          key: {
+            text: "Application number"
+          },
+          value: {
+            text: data.lpa.applicationNumber
+          }
+        }
+      ]
+    }) }}
+
+
+  </div>
+</div>
+
+{% endblock %}
