@@ -1,3 +1,5 @@
+const CreateCredential = require('../../lib/vcbbs/CreateCredential.js');
+
 module.exports = router => {
     router.get("/dashboard", function(req, res) {
         res.render("dashboard", {
@@ -55,5 +57,10 @@ module.exports = router => {
 
     router.get("/lpa/send-to-pod", function(req, res) {
         res.render("send-to-pod", {});
+    });
+
+    router.get("/lpa/test-endpoint", function(req, res) {
+        const result = CreateCredential.Create("testing");
+        return res.json({result: result});
     });
 };
