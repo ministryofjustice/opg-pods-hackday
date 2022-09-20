@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'service-add-lpa-to-pod'
+      - 'service-add-lpa-to-pod/**'
       - '.github/workflows/**'
 
 permissions:
