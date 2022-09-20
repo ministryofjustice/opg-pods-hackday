@@ -13,10 +13,12 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: 'service-add-lpa-to-pod/.nvmrc'
 
       - name: Install dependencies
+        working-directory: ./service-add-lpa-to-pod
         run: npm install
 
       - name: Run Jest
+        working-directory: ./service-add-lpa-to-pod
         run: npm run test:ci
