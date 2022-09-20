@@ -1,0 +1,21 @@
+{% if data.acting === 'cp' %}
+<div class="govuk-phase-banner">
+    <p class="govuk-phase-banner__content"><strong class="govuk-tag govuk-phase-banner__content__tag govuk-tag--yellow">
+        CP
+      </strong>
+      <span class="govuk-phase-banner__text">
+        This part of the jourey is for the certificate provider
+      </span>
+    </p>
+</div>
+{% else %}
+<div class="govuk-phase-banner">
+    <p class="govuk-phase-banner__content"><strong class="govuk-tag govuk-phase-banner__content__tag ">
+        DONOR
+      </strong>
+      <span class="govuk-phase-banner__text">
+        This part of the jourey is for the donor
+      </span>
+    </p>
+</div>
+{% endif %}

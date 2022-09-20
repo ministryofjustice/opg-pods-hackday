@@ -1,0 +1,15 @@
+<div class="govuk-!-padding-4 dash-card">
+
+  <h2 id="summary" class="govuk-heading-l govuk-!-margin-bottom-2">
+      LPA summary
+  </h2>
+
+  <p>{{data.lpa.donor.fullname}} is making a {{data.lpa.lpaType | lower}} LPA. {{data.lpa.donor.firstname}} has appointed {{data.lpa.attorney.fullname}} and {{data.lpa.attorney2.fullname}} as attorneys and {{data.lpa.replacementAttorney.fullname}} as replacement attourney.</p>
+  <p>{{data.lpa.attorney.firstname}} and {{data.lpa.attorney2.firstname}} can make decisions on behalf of {{data.lpa.donor.firstname}} {{data.lpa.decisions.howUsed2}} {{data.lpa.decisions.whenUsed2 | lower}}.</p>
+  <p>{{data.lpa.donor.firstname}} has placed the following restriction on the LPA:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>My attorneys must not sell my home unless, in my doctor’s opinion, I can no longer live independently.
+    </li>
+  </ul>
+
+</div>
