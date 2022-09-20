@@ -1,4 +1,4 @@
-name: "[Workflow] Path To Live"
+name: "[Workflow] Path To Live - Add LPA To Pod Service"
 
 on:
   push:
