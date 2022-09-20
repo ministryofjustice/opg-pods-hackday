@@ -5,12 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'app/**'
-      - 'web/**'
-      - 'codecept/**'
-      - 'cypress/**'
-      - 'terraform/**'
-      - 'scripts/**'
+      - 'service-add-lpa-to-pod'
       - '.github/workflows/**'
 
 permissions:
@@ -34,86 +29,84 @@ jobs:
     name: Create Tags
     uses: ./.github/workflows/tags_job.yml
 
-  go_unit_tests:
-    name: Run Go unit tests
-    uses: ./.github/workflows/go-unit-tests.yml
-
   docker_build_scan_push:
     name: Docker Build, Scan and Push
     uses: ./.github/workflows/docker_job.yml
-    needs: [go_unit_tests,create_tags]
+    needs: [
+      create_tags
+    ]
     with:
       tag: ${{ needs.create_tags.outputs.version_tag }}
     secrets: inherit
 
-  terraform_account_workflow_development:
-    name: TF Apply Dev Account
-    uses: ./.github/workflows/terraform_account_job.yml
-    with:
-      workspace_name: development
-    secrets: inherit
+  # terraform_account_workflow_development:
+  #   name: TF Apply Dev Account
+  #   uses: ./.github/workflows/terraform_account_job.yml
+  #   with:
+  #     workspace_name: development
+  #   secrets: inherit
 
-  terraform_account_workflow_preproduction:
-    name: TF Apply Preprod Account
-    needs: terraform_account_workflow_development
-    uses: ./.github/workflows/terraform_account_job.yml
-    with:
-      workspace_name: preproduction
-    secrets: inherit
+  # terraform_account_workflow_preproduction:
+  #   name: TF Apply Preprod Account
+  #   needs: terraform_account_workflow_development
+  #   uses: ./.github/workflows/terraform_account_job.yml
+  #   with:
+  #     workspace_name: preproduction
+  #   secrets: inherit
 
-  preproduction_deploy:
-    name: Preproduction Deploy
-    needs: [create_tags, terraform_account_workflow_preproduction, docker_build_scan_push]
-    uses: ./.github/workflows/terraform_environment_job.yml
-    with:
-      workspace_name: preproduction
-      version_tag: ${{ needs.create_tags.outputs.version_tag }}
-    secrets: inherit
+  # preproduction_deploy:
+  #   name: Preproduction Deploy
+  #   needs: [create_tags, terraform_account_workflow_preproduction, docker_build_scan_push]
+  #   uses: ./.github/workflows/terraform_environment_job.yml
+  #   with:
+  #     workspace_name: preproduction
+  #     version_tag: ${{ needs.create_tags.outputs.version_tag }}
+  #   secrets: inherit
 
-  ui_tests_preproduction_env:
-    name: Run Cypress UI Tests On Preproduction Environment
-    uses: ./.github/workflows/ui_test_job.yml
-    needs: [preproduction_deploy, create_tags]
-    with:
-      run_against_image: false
-      base_url: "https://${{ needs.preproduction_deploy.outputs.url }}"
-      tag: ${{ needs.create_tags.outputs.version_tag }}
-    secrets: inherit
+  # ui_tests_preproduction_env:
+  #   name: Run Cypress UI Tests On Preproduction Environment
+  #   uses: ./.github/workflows/ui_test_job.yml
+  #   needs: [preproduction_deploy, create_tags]
+  #   with:
+  #     run_against_image: false
+  #     base_url: "https://${{ needs.preproduction_deploy.outputs.url }}"
+  #     tag: ${{ needs.create_tags.outputs.version_tag }}
+  #   secrets: inherit
 
-  preproduction_deploy_complete:
-    name: Preproduction Deployment
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    environment: preproduction
-    needs: [ui_tests_preproduction_env]
-    steps:
-      - name: Complete
-        run: |
-          echo "preproduction environment tested, built and deployed"
+  # preproduction_deploy_complete:
+  #   name: Preproduction Deployment
+  #   if: github.ref == 'refs/heads/main'
+  #   runs-on: ubuntu-latest
+  #   environment: preproduction
+  #   needs: [ui_tests_preproduction_env]
+  #   steps:
+  #     - name: Complete
+  #       run: |
+  #         echo "preproduction environment tested, built and deployed"
 
-  always_remove_ingress:
-    name: Remove CI ingress from environment
-    if: ${{ always() }}
-    uses: ./.github/workflows/remove_ingress_job.yml
-    needs: [ui_tests_preproduction_env]
-    secrets: inherit
+  # always_remove_ingress:
+  #   name: Remove CI ingress from environment
+  #   if: ${{ always() }}
+  #   uses: ./.github/workflows/remove_ingress_job.yml
+  #   needs: [ui_tests_preproduction_env]
+  #   secrets: inherit
 
-  terraform_account_workflow_production:
-    name: TF Apply Prod Account
-    needs: [preproduction_deploy_complete]
-    uses: ./.github/workflows/terraform_account_job.yml
-    with:
-      workspace_name: production
-    secrets: inherit
+  # terraform_account_workflow_production:
+  #   name: TF Apply Prod Account
+  #   needs: [preproduction_deploy_complete]
+  #   uses: ./.github/workflows/terraform_account_job.yml
+  #   with:
+  #     workspace_name: production
+  #   secrets: inherit
 
-  production_deploy:
-    name: Production Deploy
-    needs: [create_tags, terraform_account_workflow_production, docker_build_scan_push]
-    uses: ./.github/workflows/terraform_environment_job.yml
-    with:
-      workspace_name: production
-      version_tag: ${{ needs.create_tags.outputs.version_tag }}
-    secrets: inherit
+  # production_deploy:
+  #   name: Production Deploy
+  #   needs: [create_tags, terraform_account_workflow_production, docker_build_scan_push]
+  #   uses: ./.github/workflows/terraform_environment_job.yml
+  #   with:
+  #     workspace_name: production
+  #     version_tag: ${{ needs.create_tags.outputs.version_tag }}
+  #   secrets: inherit
 
 
   end_of_main_workflow:
@@ -121,7 +114,10 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: production
-    needs: [production_deploy]
+    needs: [
+      docker_build_scan_push
+      # production_deploy
+    ]
     steps:
       - name: End of Path to Live Workflow
         run: |
