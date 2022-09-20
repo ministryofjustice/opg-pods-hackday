@@ -37,7 +37,8 @@ jobs:
     name: Docker Build, Scan and Push
     uses: ./.github/workflows/docker_job.yml
     needs: [
-      create_tags
+      create_tags,
+      test
       ]
     with:
       tag: ${{ needs.create_tags.outputs.version_tag }}
