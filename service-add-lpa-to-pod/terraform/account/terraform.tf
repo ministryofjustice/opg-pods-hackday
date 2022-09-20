@@ -21,6 +21,11 @@ variable "default_role" {
   default = "pods-hackday-ci"
 }
 
+locals {
+  sandbox_account_id    = "995199299616"
+  management_account_id = "311462405659"
+}
+
 provider "aws" {
   alias  = "eu_west_1"
   region = "eu-west-1"
@@ -28,7 +33,7 @@ provider "aws" {
     tags = local.default_tags
   }
   assume_role {
-    role_arn     = "arn:aws:iam::995199299616:role/${var.default_role}"
+    role_arn     = "arn:aws:iam::${local.sandbox_account_id}:role/${var.default_role}"
     session_name = "pods-hackday-terraform-session"
   }
 }
@@ -40,7 +45,7 @@ provider "aws" {
     tags = local.default_tags
   }
   assume_role {
-    role_arn     = "arn:aws:iam::311462405659:role/${var.default_role}"
+    role_arn     = "arn:aws:iam::${local.management_account_id}:role/${var.default_role}"
     session_name = "pods-hackday-terraform-session"
   }
 }
@@ -52,7 +57,7 @@ provider "aws" {
     tags = local.default_tags
   }
   assume_role {
-    role_arn     = "arn:aws:iam::995199299616:role/${var.default_role}"
+    role_arn     = "arn:aws:iam::${local.sandbox_account_id}:role/${var.default_role}"
     session_name = "pods-hackday-terraform-session"
   }
 }
