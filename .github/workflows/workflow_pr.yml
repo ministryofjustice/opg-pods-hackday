@@ -33,16 +33,16 @@ jobs:
     name: Create Tags
     uses: ./.github/workflows/tags_job.yml
 
-  # docker_build_scan_push:
-  #   name: Docker Build, Scan and Push
-  #   uses: ./.github/workflows/docker_job.yml
-  #   needs: [
-  #     create_tags,
-  #     test
-  #     ]
-  #   with:
-  #     tag: ${{ needs.create_tags.outputs.version_tag }}
-  #   secrets: inherit
+  docker_build_scan_push:
+    name: Docker Build, Scan and Push
+    uses: ./.github/workflows/docker_job.yml
+    needs: [
+      create_tags,
+      test
+      ]
+    with:
+      tag: ${{ needs.create_tags.outputs.version_tag }}
+    secrets: inherit
 
   # terraform_account_workflow:
   #   name: TF Plan Dev Account
@@ -56,7 +56,7 @@ jobs:
       name: PR Environment Deploy
       needs: [
         create_tags,
-        # docker_build_scan_push
+        docker_build_scan_push
         ]
       uses: ./.github/workflows/terraform_environment_job.yml
       with:
