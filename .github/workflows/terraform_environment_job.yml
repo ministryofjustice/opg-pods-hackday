@@ -2,16 +2,28 @@ on:
   workflow_call:
     inputs:
       workspace_name:
-        description: 'The terraform workspace to target for account actions'
+        description: 'The terraform workspace to target for environment actions'
+        required: true
+        type: string
+      version_tag:
+        description: 'The docker image tag to deploy in the environment'
         required: true
         type: string
       working_directory:
         description: 'The working directory for account level terraform configuration'
         required: true
         type: string
+    outputs:
+      url:
+        description: "URL for environment"
+        value: ${{ jobs.terraform_environment_workflow.outputs.url }}
 jobs:
-  terraform_account_workflow:
+  terraform_environment_workflow:
     runs-on: ubuntu-latest
+    outputs:
+      terraform_workspace_name: ${{ steps.terraform_outputs.outputs.workspace_name }}
+      terraform_container_version: ${{ steps.terraform_outputs.outputs.container_version }}
+      url: ${{ steps.terraform_outputs.outputs.url }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -20,6 +32,7 @@ jobs:
       - uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.2.6
+          terraform_wrapper: false
       - name: Configure AWS Credentials For Terraform
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -28,28 +41,38 @@ jobs:
           aws-region: eu-west-1
           role-duration-seconds: 3600
           role-session-name: PodsHackdayTerraformGithubAction
-
       - name: Lint Terraform
-        working-directory: ${{ inputs.working_directory }}
+        id: tf_lint
         run: terraform fmt -check -recursive
+        working-directory: ${{ inputs.working_directory }}
         continue-on-error: true
 
       - name: Terraform Init
-        working-directory: ${{ inputs.working_directory }}
         run: terraform init -input=false
+        working-directory: ${{ inputs.working_directory }}
 
       - name: Terraform Plan
         working-directory: ${{ inputs.working_directory }}
         env:
           TF_WORKSPACE: ${{ inputs.workspace_name }}
+          TF_VAR_container_version: ${{ inputs.version_tag }}
         run: |
           terraform workspace show
-          terraform plan -input=false -parallelism=30
+          terraform plan -lock-timeout=300s -input=false -parallelism=30
 
       - name: Terraform Apply
         working-directory: ${{ inputs.working_directory }}
         env:
           TF_WORKSPACE: ${{ inputs.workspace_name }}
-        if: github.ref == 'refs/heads/main'
+          TF_VAR_container_version: ${{ inputs.version_tag }}
         run: |
           terraform apply -lock-timeout=300s -input=false -auto-approve -parallelism=30
+
+      - name: Terraform Outputs
+        id: terraform_outputs
+        working-directory: ${{ inputs.working_directory }}
+        env:
+          TF_WORKSPACE: ${{ inputs.workspace_name }}
+          TF_VAR_container_version: ${{ inputs.version_tag }}
+        run: |
+          echo ::set-output name=url::$(terraform output -raw app_fqdn)

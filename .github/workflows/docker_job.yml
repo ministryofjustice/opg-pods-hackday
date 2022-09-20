@@ -55,7 +55,7 @@ jobs:
           ECR_REPOSITORY: pods-hackday/app
         run: |
           docker tag app:latest $ECR_REGISTRY/$ECR_REPOSITORY:${{ inputs.tag }}
-          if [ ${{ github.head_ref }} == "main" ]; then
+          if [ ${{ github.ref }} == 'refs/heads/main' ]; then
             docker tag app:latest $ECR_REGISTRY/$ECR_REPOSITORY:main-${{ inputs.tag }}
             docker tag app:latest $ECR_REGISTRY/$ECR_REPOSITORY:latest
           fi
