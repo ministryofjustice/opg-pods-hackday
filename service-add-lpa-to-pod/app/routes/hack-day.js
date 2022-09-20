@@ -59,8 +59,8 @@ module.exports = router => {
         res.render("send-to-pod", {});
     });
 
-    router.get("/lpa/test-endpoint", function(req, res) {
-        const result = CreateCredential.Create("testing");
+    router.get("/lpa/test-endpoint", async function(req, res) {
+        const result = await CreateCredential.Create();
         return res.json({result: result});
     });
 };
