@@ -44,12 +44,13 @@ jobs:
       tag: ${{ needs.create_tags.outputs.version_tag }}
     secrets: inherit
 
-  # terraform_account_workflow_development:
-  #   name: TF Plan Dev Account
-  #   uses: ./.github/workflows/terraform_account_job.yml
-  #   with:
-  #     workspace_name: development
-  #   secrets: inherit
+  terraform_account_workflow:
+    name: TF Plan Dev Account
+    uses: ./.github/workflows/terraform_account_job.yml
+    with:
+      workspace_name: development
+      working_directory: ./service-add-lpa-to-pod/terraform/account
+    secrets: inherit
 
   # ui_tests_image:
   #   name: Run Cypress UI Tests On Images
@@ -95,7 +96,8 @@ jobs:
     needs: [
       docker_build_scan_push,
       # pr_deploy,
-      create_tags
+      create_tags,
+      terraform_account_workflow
       # ui_tests_pr_env
       ]
 
