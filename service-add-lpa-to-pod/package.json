@@ -13,6 +13,9 @@
   },
   "dependencies": {
     "@govuk-prototype-kit/step-by-step": "^2.0.0",
+    "@inrupt/solid-client": "^1.23.3",
+    "@inrupt/solid-client-access-grants": "^1.1.0",
+    "@inrupt/solid-client-authn-node": "^1.12.2",
     "@ministryofjustice/frontend": "^1.4.2",
     "acorn": "^8.5.0",
     "ansi-colors": "^4.1.1",
