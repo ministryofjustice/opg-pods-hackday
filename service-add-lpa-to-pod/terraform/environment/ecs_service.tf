@@ -88,7 +88,7 @@ resource "aws_ecs_task_definition" "app" {
 resource "aws_iam_role_policy" "app_task_role" {
   name     = "${local.environment_name}-app-task-role"
   policy   = data.aws_iam_policy_document.task_role_access_policy.json
-  role     = aws_iam_role.app_task_role.arn
+  role     = aws_iam_role.app_task_role.name
   provider = aws.eu_west_1
 }
 
