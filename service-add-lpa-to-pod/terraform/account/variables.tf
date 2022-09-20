@@ -6,7 +6,7 @@ locals {
   mandatory_moj_tags = {
     business-unit    = "OPG"
     application      = "opg-pods-hackday-add-lpa-to-pod"
-    environment-name = "development-account"
+    environment-name = "hackday"
     owner            = "OPG Webops: opgteam+pods-hackday@digital.justice.gov.uk"
     is-production    = false
     runbook          = "https://github.com/ministryofjustice/opg-pods-hackday"
