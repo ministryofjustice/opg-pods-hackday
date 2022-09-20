@@ -18,7 +18,7 @@ terraform {
 
 variable "default_role" {
   type    = string
-  default = "modernising-lpa-ci"
+  default = "pods-hackday-ci"
 }
 
 provider "aws" {
