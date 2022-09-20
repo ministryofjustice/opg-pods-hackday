@@ -71,7 +71,9 @@ jobs:
     name: End of Main Workflow
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    environment: production
+    environment:
+      name: production
+      url: "https://${{ needs.production_deploy.outputs.url }}"
     needs: [
       docker_build_scan_push,
       terraform_account_workflow,
