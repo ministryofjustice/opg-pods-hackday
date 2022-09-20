@@ -65,16 +65,6 @@ jobs:
         working_directory: ./service-add-lpa-to-pod/terraform/environment
       secrets: inherit
 
-  # ui_tests_pr_env:
-  #   name: Run Cypress UI Tests On PR Environment
-  #   uses: ./.github/workflows/ui_test_job.yml
-  #   needs: [pr_deploy, create_tags]
-  #   with:
-  #     run_against_image: false
-  #     base_url: "https://${{ needs.pr_deploy.outputs.url }}"
-  #     tag: ${{ needs.create_tags.outputs.version_tag }}
-  #   secrets: inherit
-
   end_of_pr_workflow:
     name: End of PR Workflow
     runs-on: ubuntu-latest
