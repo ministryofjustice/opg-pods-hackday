@@ -39,12 +39,12 @@ jobs:
       tag: ${{ needs.create_tags.outputs.version_tag }}
     secrets: inherit
 
-  # terraform_account_workflow_development:
-  #   name: TF Apply Dev Account
-  #   uses: ./.github/workflows/terraform_account_job.yml
-  #   with:
-  #     workspace_name: development
-  #   secrets: inherit
+  terraform_account_workflow:
+    name: TF Apply Dev Account
+    uses: ./.github/workflows/terraform_account_job.yml
+    with:
+      workspace_name: development
+    secrets: inherit
 
   # terraform_account_workflow_preproduction:
   #   name: TF Apply Preprod Account
@@ -115,7 +115,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     needs: [
-      docker_build_scan_push
+      docker_build_scan_push,
+      terraform_account_workflow
       # production_deploy
     ]
     steps:
