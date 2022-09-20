@@ -124,27 +124,12 @@ exports.findAvailablePort = function (app, callback) {
     } else {
       // Port in use - offer to change to available port
       console.error('ERROR: Port ' + port + ' in use - you may have another prototype running.\n')
+      
+      // User answers no - exit
+      console.log('\nYou can set a new default port in server.js, or by running the server with PORT=XXXX')
+      console.log("\nExit by pressing 'ctrl + c'")
+      process.exit(0)
 
-      // Ask user if they want to change port
-      inquirer.prompt([{
-        name: 'changePort',
-        message: 'Change to an available port?',
-        type: 'confirm'
-      }]).then(answers => {
-        if (answers.changePort) {
-          // User answers yes
-          port = availablePort
-          fs.writeFileSync(path.join(__dirname, '/../.port.tmp'), port.toString())
-          console.log('Changed to port ' + port)
-
-          callback(port)
-        } else {
-          // User answers no - exit
-          console.log('\nYou can set a new default port in server.js, or by running the server with PORT=XXXX')
-          console.log("\nExit by pressing 'ctrl + c'")
-          process.exit(0)
-        }
-      })
     }
   })
 }
