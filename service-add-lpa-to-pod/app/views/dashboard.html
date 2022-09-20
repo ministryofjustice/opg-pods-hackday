@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Make a lasting power of attorney
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "/dashboard"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl">My lasting powers of attorney</h1>
+
+      <div class="ticket__container">
+        <article class="moj-ticket-panel moj-ticket-panel--inline" aria-label="Sub navigation 4">
+          <section class="moj-ticket-panel__content moj-ticket-panel__content--purple" aria-label="Section 6">
+            <strong class="govuk-tag govuk-tag--green">Registered</strong>
+            <h2 class="govuk-heading-m govuk-!-margin-bottom-1">{{ data.lpa.donor.fullname }}: {{ data.lpa.lpaType }}</h2>
+            <span class="govuk-hint"><strong>Application number:</strong> {{ data.lpa.applicationNumber }}</span>
+            <div class="govuk-button-group">
+              <a class="govuk-link govuk-link--no-visited-state" href="/lpa/view">View LPA details</a>
+              <!-- <a download="lpa.jsonld" class="govuk-link govuk-link--no-visited-state" href="/vc-ending/download">Download</a> -->
+            </div>
+          </section>
+        </article>      
+      </div>
+    </div>
+  </div>
+
+  {{ govukButton({ href: "/lpa/send-to-pod", text: "Add to POD" }) }}
+{% endblock %}
