@@ -25,6 +25,10 @@ defaults:
     shell: bash
 
 jobs:
+  test:
+    name: Jest Tests
+    uses: ./.github/workflows/test_job.yml
+
   create_tags:
     name: Create Tags
     uses: ./.github/workflows/tags_job.yml
@@ -33,7 +37,8 @@ jobs:
     name: Docker Build, Scan and Push
     uses: ./.github/workflows/docker_job.yml
     needs: [
-      create_tags
+      create_tags,
+      test
     ]
     with:
       tag: ${{ needs.create_tags.outputs.version_tag }}
