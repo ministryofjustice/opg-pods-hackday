@@ -25,38 +25,38 @@ defaults:
     shell: bash
 
 jobs:
-  test:
-    name: Jest Tests
-    uses: ./.github/workflows/test_job.yml
+  # test:
+  #   name: Jest Tests
+  #   uses: ./.github/workflows/test_job.yml
 
   create_tags:
     name: Create Tags
     uses: ./.github/workflows/tags_job.yml
 
-  docker_build_scan_push:
-    name: Docker Build, Scan and Push
-    uses: ./.github/workflows/docker_job.yml
-    needs: [
-      create_tags,
-      test
-      ]
-    with:
-      tag: ${{ needs.create_tags.outputs.version_tag }}
-    secrets: inherit
+  # docker_build_scan_push:
+  #   name: Docker Build, Scan and Push
+  #   uses: ./.github/workflows/docker_job.yml
+  #   needs: [
+  #     create_tags,
+  #     test
+  #     ]
+  #   with:
+  #     tag: ${{ needs.create_tags.outputs.version_tag }}
+  #   secrets: inherit
 
-  terraform_account_workflow:
-    name: TF Plan Dev Account
-    uses: ./.github/workflows/terraform_account_job.yml
-    with:
-      workspace_name: development
-      working_directory: ./service-add-lpa-to-pod/terraform/account
-    secrets: inherit
+  # terraform_account_workflow:
+  #   name: TF Plan Dev Account
+  #   uses: ./.github/workflows/terraform_account_job.yml
+  #   with:
+  #     workspace_name: development
+  #     working_directory: ./service-add-lpa-to-pod/terraform/account
+  #   secrets: inherit
 
   pr_deploy:
       name: PR Environment Deploy
       needs: [
         create_tags,
-        docker_build_scan_push
+        # docker_build_scan_push
         ]
       uses: ./.github/workflows/terraform_environment_job.yml
       with:
@@ -72,10 +72,10 @@ jobs:
     #   name: "dev_${{ needs.create_tags.outputs.environment_workspace_name }}"
     #   url: "https://${{ needs.pr_deploy.outputs.url }}"
     needs: [
-      docker_build_scan_push,
+      # docker_build_scan_push,
       pr_deploy,
-      create_tags,
-      terraform_account_workflow
+      # create_tags,
+      # terraform_account_workflow
       ]
 
     steps:
