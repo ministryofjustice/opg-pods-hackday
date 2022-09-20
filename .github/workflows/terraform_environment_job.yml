@@ -13,16 +13,10 @@ on:
         description: 'The working directory for account level terraform configuration'
         required: true
         type: string
-    # outputs:
-    #   terraform_workspace_name:
-    #     description: "Name of Terraform workspace"
-    #     value: ${{ jobs.terraform_environment_workflow.outputs.terraform_workspace_name }}
-    #   terraform_container_version:
-    #     description: "Container version deployed by Terraform"
-    #     value: ${{ jobs.terraform_environment_workflow.outputs.terraform_container_version }}
-    #   url:
-    #     description: "URL for environment"
-    #     value: ${{ jobs.terraform_environment_workflow.outputs.url }}
+    outputs:
+      url:
+        description: "URL for environment"
+        value: ${{ jobs.terraform_environment_workflow.outputs.url }}
 jobs:
   terraform_environment_workflow:
     runs-on: ubuntu-latest
@@ -81,6 +75,4 @@ jobs:
           TF_WORKSPACE: ${{ inputs.workspace_name }}
           TF_VAR_container_version: ${{ inputs.version_tag }}
         run: |
-          echo ::set-output name=workspace_name::$(terraform output -raw workspace_name)
-          echo ::set-output name=container_version::$(terraform output -raw container_version)
           echo ::set-output name=url::$(terraform output -raw app_fqdn)
