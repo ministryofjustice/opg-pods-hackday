@@ -38,7 +38,7 @@ jobs:
     uses: ./.github/workflows/docker_job.yml
     needs: [
       create_tags,
-      test
+      # test
       ]
     with:
       tag: ${{ needs.create_tags.outputs.version_tag }}
