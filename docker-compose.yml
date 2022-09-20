@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  add-lpa-to-pod:
+    build:
+      context: ./service-add-lpa-to-pod
+      dockerfile: Dockerfile
+    container_name: add-lpa-to-pod
+    restart: on-failure
+    ports:
+      - "3000:3000"
