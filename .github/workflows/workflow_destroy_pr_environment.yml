@@ -57,9 +57,9 @@ jobs:
           role-session-name: PodsHackdayTerraformGithubAction
       - name: Terraform Init
         run: terraform init -input=false
-        working-directory: ./terraform/environment
+        working-directory: service-add-lpa-to-pod/terraform/environment
       - name: Destroy PR environment and Terraform workspace
-        working-directory: ./terraform/environment
+        working-directory: service-add-lpa-to-pod/terraform/environment
         run: |
           terraform workspace select ${{ needs.generate_environment_workspace_name.outputs.environment_workspace_name }}
           terraform destroy -auto-approve
