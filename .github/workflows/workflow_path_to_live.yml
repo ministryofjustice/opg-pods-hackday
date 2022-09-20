@@ -74,7 +74,7 @@ jobs:
     environment: production
     needs: [
       docker_build_scan_push,
-      terraform_account_workflow
+      terraform_account_workflow,
       production_deploy
     ]
     steps:
