@@ -44,6 +44,7 @@ jobs:
     uses: ./.github/workflows/terraform_account_job.yml
     with:
       workspace_name: development
+      working_directory: ./service-add-lpa-to-pod/terraform/account
     secrets: inherit
 
   # terraform_account_workflow_preproduction:
