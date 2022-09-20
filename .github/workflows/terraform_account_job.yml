@@ -5,6 +5,10 @@ on:
         description: 'The terraform workspace to target for account actions'
         required: true
         type: string
+      working_directory:
+        description: 'The working directory for account level terraform configuration'
+        required: true
+        type: string
 jobs:
   terraform_account_workflow:
     runs-on: ubuntu-latest
@@ -26,27 +30,26 @@ jobs:
           role-session-name: OPGModernisingLPATerraformGithubAction
 
       - name: Lint Terraform
-        id: tf_lint
+        working-directory: ${{ inputs.working_directory }}
         run: terraform fmt -check -recursive
-        working-directory: ./service-add-lpa-to-pod/terraform/account
         continue-on-error: true
 
       - name: Terraform Init
+        working-directory: ${{ inputs.working_directory }}
         run: terraform init -input=false
-        working-directory: ./service-add-lpa-to-pod/terraform/account
 
       - name: Terraform Plan
+        working-directory: ${{ inputs.working_directory }}
         env:
           TF_WORKSPACE: ${{ inputs.workspace_name }}
         run: |
           terraform workspace show
           terraform plan -input=false -parallelism=30
-        working-directory: ./service-add-lpa-to-pod/terraform/account
 
       - name: Terraform Apply
+        working-directory: ${{ inputs.working_directory }}
         env:
           TF_WORKSPACE: ${{ inputs.workspace_name }}
         if: github.ref == 'refs/heads/main'
         run: |
           terraform apply -lock-timeout=300s -input=false -auto-approve -parallelism=30
-        working-directory: ./service-add-lpa-to-pod/terraform/account
