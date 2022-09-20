@@ -25,6 +25,10 @@ defaults:
     shell: bash
 
 jobs:
+  test:
+    name: Jest Tests
+    uses: ./.github/workflows/test_job.yml
+
   create_tags:
     name: Create Tags
     uses: ./.github/workflows/tags_job.yml
