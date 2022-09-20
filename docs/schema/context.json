@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@protected": true,
+    "id": "@id",
+    "type": "@type",
+    "LastingPowerOfAttorney": {
+      "@id": "https://www.opg.gov.uk.org/2022/LastingPowerOfAttorney",
+      "@context": {
+        "@version": 1.1,
+        "@protected": true,
+        "id": "@id",
+        "type": "@type",
+        "@context": {
+          "@version": 1.1,
+          "@protected": true,
+          "id": "@id",
+          "type": "@type",
+          "schema": "http://www.w3.org/2001/XMLSchema#",
+          "LPAID": {
+            "@id": "schema:string",
+            "@type": "@id",
+            "@container": "@set"
+          },
+          "PreferencesInstructions": {
+            "@id": "schema:string",
+            "@type": "@id",
+            "@container": "@set"
+          },
+          "AttorneyID": {
+            "@id": "schema:string",
+            "@type": "@id",
+            "@container": "@set"
+          },
+          "DonorID": {
+            "@id": "schema:string",
+            "@type": "@id",
+            "@container": "@set"
+          }
+        }
+      }
+    }
+  }
+}
