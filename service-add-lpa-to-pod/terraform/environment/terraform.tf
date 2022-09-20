@@ -61,3 +61,7 @@ provider "aws" {
     session_name = "opg-pods-hackday-terraform-session"
   }
 }
+
+data "aws_region" "current" {
+  provider = aws.eu_west_1
+}

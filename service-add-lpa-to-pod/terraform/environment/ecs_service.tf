@@ -1,169 +1,155 @@
-# resource "aws_ecs_service" "app" {
-#   name                  = "app"
-#   cluster               = var.ecs_cluster
-#   task_definition       = aws_ecs_task_definition.app.arn
-#   desired_count         = var.ecs_service_desired_count
-#   platform_version      = "1.4.0"
-#   wait_for_steady_state = true
-#   propagate_tags        = "SERVICE"
+resource "aws_ecs_service" "app" {
+  name                  = "app"
+  cluster               = aws_ecs_cluster.main.id
+  task_definition       = aws_ecs_task_definition.app.arn
+  desired_count         = 1
+  platform_version      = "1.4.0"
+  wait_for_steady_state = true
+  propagate_tags        = "SERVICE"
 
-#   capacity_provider_strategy {
-#     capacity_provider = var.ecs_capacity_provider
-#     weight            = 100
-#   }
+  capacity_provider_strategy {
+    capacity_provider = "FARGATE_SPOT"
+    weight            = 100
+  }
 
-#   network_configuration {
-#     security_groups  = [aws_security_group.app_ecs_service.id]
-#     subnets          = var.network.application_subnets
-#     assign_public_ip = false
-#   }
+  network_configuration {
+    security_groups  = [aws_security_group.app_ecs_service.id]
+    subnets          = data.aws_subnet.application.*.id
+    assign_public_ip = false
+  }
 
-#   load_balancer {
-#     target_group_arn = aws_lb_target_group.app.arn
-#     container_name   = "app"
-#     container_port   = var.container_port
-#   }
+  load_balancer {
+    target_group_arn = aws_lb_target_group.app.arn
+    container_name   = "app"
+    container_port   = 3000
+  }
 
-#   lifecycle {
-#     create_before_destroy = true
-#   }
+  lifecycle {
+    create_before_destroy = true
+  }
 
-#   timeouts {
-#     create = "7m"
-#     update = "7m"
-#   }
-#   provider = aws.eu_west_1
-# }
+  timeouts {
+    create = "7m"
+    update = "7m"
+  }
+  provider = aws.eu_west_1
+}
 
-# resource "aws_security_group" "app_ecs_service" {
-#   name_prefix = "${local.name_prefix}-ecs-service"
-#   description = "app service security group"
-#   vpc_id      = var.network.vpc_id
-#   lifecycle {
-#     create_before_destroy = true
-#   }
-#   provider = aws.eu_west_1
-# }
+resource "aws_security_group" "app_ecs_service" {
+  name_prefix = "${local.environment_name}-ecs-service"
+  description = "app service security group"
+  vpc_id      = data.aws_vpc.main.id
+  lifecycle {
+    create_before_destroy = true
+  }
+  provider = aws.eu_west_1
+}
 
-# resource "aws_security_group_rule" "app_ecs_service_ingress" {
-#   description              = "Allow Port 80 ingress from the application load balancer"
-#   type                     = "ingress"
-#   from_port                = 80
-#   to_port                  = var.container_port
-#   protocol                 = "tcp"
-#   security_group_id        = aws_security_group.app_ecs_service.id
-#   source_security_group_id = aws_security_group.app_loadbalancer.id
-#   lifecycle {
-#     create_before_destroy = true
-#   }
-#   provider = aws.eu_west_1
-# }
+resource "aws_security_group_rule" "app_ecs_service_ingress" {
+  description              = "Allow Port 80 ingress from the application load balancer"
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 3000
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.app_ecs_service.id
+  source_security_group_id = aws_security_group.app_loadbalancer.id
+  lifecycle {
+    create_before_destroy = true
+  }
+  provider = aws.eu_west_1
+}
 
-# resource "aws_security_group_rule" "app_ecs_service_egress" {
-#   description       = "Allow any egress from service"
-#   type              = "egress"
-#   from_port         = 0
-#   to_port           = 0
-#   protocol          = "-1"
-#   cidr_blocks       = ["0.0.0.0/0"] #tfsec:ignore:aws-ec2-no-public-egress-sgr - open egress for ECR access
-#   security_group_id = aws_security_group.app_ecs_service.id
-#   lifecycle {
-#     create_before_destroy = true
-#   }
-#   provider = aws.eu_west_1
-# }
+resource "aws_security_group_rule" "app_ecs_service_egress" {
+  description       = "Allow any egress from service"
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"] #tfsec:ignore:aws-ec2-no-public-egress-sgr - open egress for ECR access
+  security_group_id = aws_security_group.app_ecs_service.id
+  lifecycle {
+    create_before_destroy = true
+  }
+  provider = aws.eu_west_1
+}
 
+resource "aws_ecs_task_definition" "app" {
+  family                   = local.environment_name
+  requires_compatibilities = ["FARGATE"]
+  network_mode             = "awsvpc"
+  cpu                      = 512
+  memory                   = 1024
+  container_definitions    = "[${local.app}]"
+  task_role_arn            = aws_iam_role.app_task_role.arn
+  execution_role_arn       = aws_iam_role.execution_role.arn
+  provider                 = aws.eu_west_1
+}
 
+resource "aws_iam_role_policy" "app_task_role" {
+  name     = "${local.environment_name}-app-task-role"
+  policy   = data.aws_iam_policy_document.task_role_access_policy.json
+  role     = aws_iam_role.app_task_role.arn
+  provider = aws.eu_west_1
+}
 
-# resource "aws_ecs_task_definition" "app" {
-#   family                   = local.name_prefix
-#   requires_compatibilities = ["FARGATE"]
-#   network_mode             = "awsvpc"
-#   cpu                      = 512
-#   memory                   = 1024
-#   container_definitions    = "[${local.app}]"
-#   task_role_arn            = var.ecs_task_role.arn
-#   execution_role_arn       = var.ecs_execution_role.arn
-#   provider                 = aws.eu_west_1
-# }
+data "aws_iam_policy_document" "task_role_access_policy" {
+  statement {
+    sid    = "XrayAccess"
+    effect = "Allow"
 
-# resource "aws_iam_role_policy" "app_task_role" {
-#   name     = "${data.aws_default_tags.current.tags.environment-name}-app-task-role"
-#   policy   = data.aws_iam_policy_document.task_role_access_policy.json
-#   role     = var.ecs_task_role.name
-#   provider = aws.eu_west_1
-# }
+    actions = [
+      "xray:PutTraceSegments",
+      "xray:PutTelemetryRecords",
+      "xray:GetSamplingRules",
+      "xray:GetSamplingTargets",
+      "xray:GetSamplingStatisticSummaries",
+    ]
 
-# data "aws_iam_policy_document" "task_role_access_policy" {
-#   statement {
-#     sid    = "XrayAccess"
-#     effect = "Allow"
+    resources = ["*"]
+  }
 
-#     actions = [
-#       "xray:PutTraceSegments",
-#       "xray:PutTelemetryRecords",
-#       "xray:GetSamplingRules",
-#       "xray:GetSamplingTargets",
-#       "xray:GetSamplingStatisticSummaries",
-#     ]
+  provider = aws.eu_west_1
+}
 
-#     resources = ["*"]
-#   }
+data "aws_ecr_repository" "app" {
+  name     = "pods-hackday/app"
+  provider = aws.management_eu_west_1
+}
 
-#   provider = aws.eu_west_1
-# }
-
-# locals {
-#   app = jsonencode(
-#     {
-#       cpu         = 1,
-#       essential   = true,
-#       image       = "${var.app_service_repository_url}:${var.app_service_container_version}",
-#       mountPoints = [],
-#       name        = "app",
-#       portMappings = [
-#         {
-#           containerPort = var.container_port,
-#           hostPort      = var.container_port,
-#           protocol      = "tcp"
-#         }
-#       ],
-#       volumesFrom = [],
-#       logConfiguration = {
-#         logDriver = "awslogs",
-#         options = {
-#           awslogs-group         = var.ecs_application_log_group_name,
-#           awslogs-region        = data.aws_region.current.name,
-#           awslogs-stream-prefix = data.aws_default_tags.current.tags.environment-name
-#         }
-#       },
-#       environment = [
-#         {
-#           name  = "LOGGING_LEVEL",
-#           value = tostring(100)
-#         },
-#         {
-#           name  = "APP_PORT",
-#           value = tostring(var.container_port)
-#         },
-#         {
-#           name  = "CLIENT_ID",
-#           value = "37iOvkzc5BIRKsFSu5l3reZmFlA"
-#         },
-#         {
-#           name  = "ISSUER",
-#           value = "https://oidc.integration.account.gov.uk"
-#         },
-#         {
-#           # this is not the final value, but will allow signin to be tested while the real redirectURL is changed
-#           name  = "APP_PUBLIC_URL",
-#           value = var.app_env_vars.app_public_url
-#         },
-#         {
-#           name  = "DYNAMODB_TABLE_LPAS",
-#           value = var.lpas_table.name
-#         },
-#       ]
-#     }
-#   )
-# }
+locals {
+  app = jsonencode(
+    {
+      cpu         = 1,
+      essential   = true,
+      image       = "${data.aws_ecr_repository.app.repository_url}:${var.container_version}",
+      mountPoints = [],
+      name        = "app",
+      portMappings = [
+        {
+          containerPort = 3000,
+          hostPort      = 3000,
+          protocol      = "tcp"
+        }
+      ],
+      volumesFrom = [],
+      logConfiguration = {
+        logDriver = "awslogs",
+        options = {
+          awslogs-group         = aws_cloudwatch_log_group.application_logs.name,
+          awslogs-region        = data.aws_region.current.name,
+          awslogs-stream-prefix = local.environment_name
+        }
+      },
+      environment = [
+        {
+          name  = "LOGGING_LEVEL",
+          value = tostring(100)
+        },
+        {
+          name  = "APP_PORT",
+          value = tostring(3000)
+        }
+      ]
+    }
+  )
+}
