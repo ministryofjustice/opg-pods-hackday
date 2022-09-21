@@ -7,8 +7,7 @@
   text-decoration-thickness: max(1px, .0625rem);
   text-underline-offset: 0.1em;
 }
-/*! Copyright (c) 2011 by Margaret Calvert & Henrik Kubel. All rights reserved. The font has been customised for exclusive use on gov.uk. This cut is not commercially available. */
-/* stylelint-disable-line scss/comment-no-loud  */
+/*! Copyright (c) 2011 by Margaret Calvert & Henrik Kubel. All rights reserved. The font has been customised for exclusive use on gov.uk. This cut is not commercially available. */ /* stylelint-disable-line scss/comment-no-loud  */
 @font-face {
   font-family: "GDS Transport";
   font-style: normal;
@@ -2765,11 +2764,9 @@ x:-moz-any-link {
     margin-right: 10px;
     padding-right: 10px;
   }
-
   .govuk-summary-list__actions-list-item:not(:last-child) {
     border-right: 1px solid #b1b4b6;
   }
-
   .govuk-summary-list__actions-list-item:last-child {
     margin-right: 0;
     padding-right: 0;
@@ -2781,11 +2778,9 @@ x:-moz-any-link {
     margin-left: 10px;
     padding-left: 10px;
   }
-
   .govuk-summary-list__actions-list-item:not(:first-child) {
     border-left: 1px solid #b1b4b6;
   }
-
   .govuk-summary-list__actions-list-item:first-child {
     margin-left: 0;
     padding-left: 0;
@@ -3571,7 +3566,6 @@ x:-moz-any-link {
     -webkit-column-count: 2;
     column-count: 2;
   }
-
   .govuk-footer__list--columns-3 {
     -webkit-column-count: 3;
     column-count: 3;
@@ -3998,11 +3992,9 @@ x:-moz-any-link {
     color: #0b0c0c;
     background: transparent;
   }
-
   .govuk-header__logotype-crown-fallback-image {
     display: none;
   }
-
   .govuk-header__link:link, .govuk-header__link:visited {
     color: #0b0c0c;
   }
