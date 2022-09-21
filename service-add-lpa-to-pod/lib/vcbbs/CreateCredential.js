@@ -92,6 +92,6 @@ module.exports = class CreateCredential {
 
         console.log("Verification result");
         console.log(JSON.stringify(verified, null, 2));
-        return verified;
+        return { verified: verified, deriveProof:  deriveProof, signedDocument: signedDocument };
     }
 }
