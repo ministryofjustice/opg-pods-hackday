@@ -29,7 +29,7 @@ jobs:
       name: PR Environment Deploy
       uses: ./.github/workflows/terraform_environment_job.yml
       with:
-        workspace_name: sandbox
+        workspace_name: sandbox-development
         working_directory: ./service-revoke/terraform/environment
       secrets: inherit
 
