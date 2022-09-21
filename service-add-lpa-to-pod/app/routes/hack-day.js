@@ -27,7 +27,7 @@ module.exports = router => {
                         instructions: "Be good",
                         preferences: "Do what I ask"
                     },
-                    lpaType: "Property and Finance",
+                    lpaType: "Health and welfare LPA",
                     applicationNumber: 10238756382
                 } 
             } 
@@ -170,5 +170,9 @@ module.exports = router => {
 
     router.get("/lpa/access-permissions", async function(req, res) {
         res.render("lpa-access-permissions", {});
+    });
+
+    router.get("/what-is-a-pod", async function(req, res) {
+        res.render("what-is-a-pod", {});
     });
 };
