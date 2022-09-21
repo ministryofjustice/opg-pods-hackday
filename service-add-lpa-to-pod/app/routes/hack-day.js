@@ -21,7 +21,7 @@ module.exports = router => {
                         instructions: "Be good",
                         preferences: "Do what I ask"
                     },
-                    lpaType: "Property and Finance",
+                    lpaType: "Health and welfare LPA",
                     applicationNumber: 10238756382
                 } 
             } 
