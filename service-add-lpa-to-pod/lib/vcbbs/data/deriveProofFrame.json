@@ -9,7 +9,9 @@
     "@explicit": true,
     "type": ["LastingPowerOfAttorneyDocument", "Person"],
     "attorneyGivenName": {},
-    "familyName": {},
+    "attorneyFamilyName": {},
+    "donorGivenName": {},
+    "donorFamilyName": {},
     "preferencesInstructions": {}
   }
 }

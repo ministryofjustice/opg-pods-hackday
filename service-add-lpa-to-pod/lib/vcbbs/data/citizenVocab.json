@@ -36,8 +36,10 @@
         "schema": "http://schema.org/",
         "xsd": "http://www.w3.org/2001/XMLSchema#",
 
-        "familyName": "schema:familyName",
+        "attorneyFamilyName": "schema:familyName",
         "attorneyGivenName": "schema:givenName",
+        "donorFamilyName": "schema:familyName",
+        "donorGivenName": "schema:givenName",
         "preferencesInstructions": "schema:description"
       }
     },

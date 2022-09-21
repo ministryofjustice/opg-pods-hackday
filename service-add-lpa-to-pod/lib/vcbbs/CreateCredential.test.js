@@ -27,12 +27,14 @@ describe("CreateCredential", () => {
             expect(result.proof).toHaveProperty("verificationMethod");
         });
 
-        it("it should return an attorney given name", async () => {
-            expect(credential.signedDocument.credentialSubject.attorneyGivenName).toBe("JOHN");
+        it("it should return a attorney details", async () => {
+            expect(credential.signedDocument.credentialSubject.attorneyGivenName).toBe("Alice");
+            expect(credential.signedDocument.credentialSubject.attorneyFamilyName).toBe("Smith");
         });
 
-        it("it should return an attorney family name", async () => {
-            expect(credential.signedDocument.credentialSubject.familyName).toBe("SMITH");
+        it("it should return a donors details", async () => {
+            expect(credential.signedDocument.credentialSubject.donorGivenName).toBe("Bob");
+            expect(credential.signedDocument.credentialSubject.donorFamilyName).toBe("Smith");
         });
 
         it("it should return instructions", async () => {

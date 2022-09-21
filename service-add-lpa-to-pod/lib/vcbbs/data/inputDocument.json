@@ -15,8 +15,10 @@
   "credentialSubject": {
     "id": "did:example:b34ca6cd37bbf23",
     "type": ["LastingPowerOfAttorneyDocument", "Person"],
-    "attorneyGivenName": "JOHN",
-    "familyName": "SMITH",
+    "attorneyGivenName": "Alice",
+    "attorneyFamilyName": "Smith",
+    "donorGivenName": "Bob",
+    "donorFamilyName": "Smith",
     "preferencesInstructions": "Some instructions"
   }
 }
