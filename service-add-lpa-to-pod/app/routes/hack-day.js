@@ -67,4 +67,8 @@ module.exports = router => {
     router.get("/success", async function(req, res) {
         res.render("success", {});
     });
+
+    router.get("/gds/account/login", function(req, res) {
+        res.render("login-gds-account", {});
+    });
 };
