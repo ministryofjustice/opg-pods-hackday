@@ -17,8 +17,8 @@ const suiteContext = require("./data/suiteContext.json");
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 const documents = {
-    "did:example:489398593#test": keyPairOptions,
-    "did:example:489398593": exampleControllerDoc,
+    "did:opgverifiablecredential:489398593#test": keyPairOptions,
+    "did:opgverifiablecredential:489398593": exampleControllerDoc,
     "https://w3id.org/security/bbs/v1": bbsContext,
     "https://w3id.org/citizenship/v1": citizenVocab,
     "https://www.w3.org/2018/credentials/v1": credentialContext,

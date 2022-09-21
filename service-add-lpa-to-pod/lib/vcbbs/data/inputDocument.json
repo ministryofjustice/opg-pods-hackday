@@ -6,14 +6,14 @@
   ],
   "id": "https://issuer.oidp.uscis.gov/credentials/83627465",
   "type": ["VerifiableCredential", "LastingPowerOfAttorney"],
-  "issuer": "did:example:489398593",
+  "issuer": "did:opgverifiablecredential:489398593",
   "identifier": "83627465",
   "name": "Lasting Power of Attorney",
   "description": "Office of the Public Guardian issued Credential.",
   "issuanceDate": "2019-12-03T12:19:52Z",
   "expirationDate": "2029-12-03T12:19:52Z",
   "credentialSubject": {
-    "id": "did:example:b34ca6cd37bbf23",
+    "id": "did:opgverifiablecredential:b34ca6cd37bbf23",
     "type": ["LastingPowerOfAttorneyDocument", "Person"],
 
     "attorneyGivenName": "Alice",
