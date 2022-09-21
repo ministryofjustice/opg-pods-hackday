@@ -68,6 +68,10 @@ module.exports = router => {
         res.render("success", {});
     });
 
+    router.get("/gds/account/login", function(req, res) {
+        res.render("login-gds-account", {});
+    });
+
     router.get("/lpa/access-permissions", async function(req, res) {
         res.render("lpa-access-permissions", {});
     });
