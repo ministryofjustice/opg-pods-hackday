@@ -12,7 +12,41 @@
 {% endblock %}
 
 {% block content %}
-  
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">
+       Sign in to GDS account
+      </h1>
+      <fieldset class="govuk-fieldset">
+      
+        {{ govukInput({
+            classes: "govuk-input--width-10",
+            name: "_email",
+            id: "email",
+            type: "email",
+            label:{
+                text: "Email"
+            }
+          }) }}
 
-  {{ govukButton({ href: "/lpa/send-to-pod", text: "Add to POD" }) }}
+        {{ govukInput({
+            classes: "govuk-input--width-10",
+            name: "_password",
+            id: "password",
+            type: "password",
+            errorMessage: {
+              text: "The password is not correct"
+            } if error == "wrong-password",
+            label:{
+                text: "Password"
+            }
+          }) }}
+      </fieldset>
+
+      {{ govukButton({ href: "/gds/account/permissions", text: "Sign in" }) }}
+
+    </div>
+</div>
+
+
 {% endblock %}
