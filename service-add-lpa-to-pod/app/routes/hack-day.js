@@ -67,4 +67,8 @@ module.exports = router => {
     router.get("/success", async function(req, res) {
         res.render("success", {});
     });
+
+    router.get("/lpa/access-permissions", async function(req, res) {
+        res.render("lpa-access-permissions", {});
+    });
 };
