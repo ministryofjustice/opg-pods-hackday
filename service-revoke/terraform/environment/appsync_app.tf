@@ -21,7 +21,7 @@ EOF
 resource "aws_appsync_api_key" "opg_vc_revocation" {
   provider = aws.eu_west_1
   api_id   = aws_appsync_graphql_api.opg_vc_revocation.id
-  expires  = "2023-05-03T04:00:00Z"
+  expires  = timeadd(timestamp(), "360h") # Now plus 15 days
 }
 
 resource "aws_dynamodb_table" "opg_vc_revocation" {
