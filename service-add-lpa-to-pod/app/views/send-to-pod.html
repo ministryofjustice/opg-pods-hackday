@@ -18,33 +18,29 @@
     <h1 class="govuk-heading-l">Add LPA to POD</h1>
     <p class="govuk-body">Some content to tell the user whats going to happen</p>
 
-    <div class="govuk-form-group">
-        <fieldset class="govuk-fieldset">
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-            <h1 class="govuk-fieldset__heading">
-                Which POD do you want to use?
-            </h1>
-            </legend>
-            <div class="govuk-radios" data-module="govuk-radios">
-            <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="where-do-you-live" name="where-do-you-live" type="radio" value="england">
-                <label class="govuk-label govuk-radios__label" for="where-do-you-live">
-                GDS identity
-                </label>
-            </div>
-            <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="where-do-you-live-2" name="where-do-you-live" type="radio" value="scotland">
-                <label class="govuk-label govuk-radios__label" for="where-do-you-live-2">
-                Google wallet
-                </label>
-            </div>
-            </div>
-        </fieldset>
-    </div>
+    {{ govukRadios({
+        idPrefix: "how-many-balls",
+        name: "how-many-balls",
+        fieldset: {
+          legend: {
+            text: "Which POD do you want to use?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "gds",
+            text: "GDS identity"
+          },
+          {
+            value: "google_wallet",
+            text: "Google wallet"
+          }
+        ]
+      }) }}
 
-    <a href="/pod-link">
-        <button class="govuk-button">Continue</button>
-    </a>
+      {{ govukButton({ href: "/gds/account/login", text: "Continue" }) }}
   </div>
 </div>
 
