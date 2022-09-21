@@ -1,4 +1,5 @@
 import CreateCredential from './CreateCredential.js';
+const testVerifiableCredential = require("./data/testVC.json");
 
 describe("CreateCredential", () => {
     describe("If I create a credential", () => {
@@ -50,6 +51,35 @@ describe("CreateCredential", () => {
         it("it should return instructions and type", async () => {
             expect(credential.signedDocument.credentialSubject.preferencesInstructions).toBe("Some instructions");
             expect(credential.signedDocument.credentialSubject.lpaType).toBe("Health and Welfare");
+        });
+    });
+});
+
+describe("Verify", () => {
+    describe("If I verify a credential", () => {
+        let credential;
+        let result;
+        beforeAll(async () => {
+            credential = await CreateCredential.Verify(testVerifiableCredential);
+            result = credential.verified.results[0];
+        })
+        it("it should be verified", async () => {
+            expect(credential.verified.verified).toBeTruthy();
+        });
+        it("it should return 1 result", async () => {
+            expect(credential.verified.results.length).toBe(1);
+        });
+        it("it should return 1 result as verified", async () => {
+            expect(result.verified).toBeTruthy();
+        });
+        it("it should have the correct properties", async () => {
+            expect(result.proof).toHaveProperty("@context");
+            expect(result.proof).toHaveProperty("type");
+            expect(result.proof).toHaveProperty("created");
+            expect(result.proof).toHaveProperty("nonce");
+            expect(result.proof).toHaveProperty("proofPurpose");
+            expect(result.proof).toHaveProperty("proofValue");
+            expect(result.proof).toHaveProperty("verificationMethod");
         });
     });
 });

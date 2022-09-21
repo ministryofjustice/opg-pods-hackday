@@ -94,4 +94,40 @@ module.exports = class CreateCredential {
         console.log(JSON.stringify(verified, null, 2));
         return { verified: verified, deriveProof:  deriveProof, signedDocument: signedDocument };
     }
+
+    static async Verify(signedDocument) {
+
+        console.log("Input document with proof");
+        console.log(JSON.stringify(signedDocument, null, 2));
+
+        //Verify the proof
+        let verified = await verify(signedDocument, {
+            suite: new BbsBlsSignature2020(),
+            purpose: new purposes.AssertionProofPurpose(),
+            documentLoader,
+        });
+
+        console.log("Verification result");
+        console.log(JSON.stringify(verified, null, 2));
+
+        //Derive a proof
+        const derivedProof = await deriveProof(signedDocument, revealDocument, {
+            suite: new BbsBlsSignatureProof2020(),
+            documentLoader,
+        });
+
+        console.log(JSON.stringify(derivedProof, null, 2));
+
+        console.log("Verifying Derived Proof");
+        //Verify the derived proof
+        verified = await verify(derivedProof, {
+            suite: new BbsBlsSignatureProof2020(),
+            purpose: new purposes.AssertionProofPurpose(),
+            documentLoader,
+        });
+
+        console.log("Verification result");
+        console.log(JSON.stringify(verified, null, 2));
+        return { verified: verified, deriveProof:  deriveProof };
+    }
 }
