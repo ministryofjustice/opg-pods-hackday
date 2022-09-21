@@ -4,12 +4,27 @@
     "https://w3id.org/citizenship/v1",
     "https://w3id.org/security/bbs/v1"
   ],
-  "type": ["VerifiableCredential", "PermanentResidentCard"],
+  "type": ["VerifiableCredential", "LastingPowerOfAttorney"],
   "credentialSubject": {
     "@explicit": true,
-    "type": ["PermanentResident", "Person"],
-    "givenName": {},
-    "familyName": {},
-    "gender": {}
+    "type": ["LastingPowerOfAttorneyDocument", "Person"],
+    "attorneyFamilyName": {},
+    "attorneyGivenName": {},
+    "attorneyAddressStreet": {},
+    "attorneyAddressTown": {},
+    "attorneyAddressRegion": {},
+    "attorneyAddressCountry": {},
+    "attorneyAddressPostCode": {},
+
+    "donorFamilyName": {},
+    "donorGivenName": {},
+    "donorAddressStreet": {},
+    "donorAddressTown": {},
+    "donorAddressRegion": {},
+    "donorAddressCountry": {},
+    "donorAddressPostCode": {},
+
+    "preferencesInstructions": {},
+    "lpaType": {}
   }
 }
