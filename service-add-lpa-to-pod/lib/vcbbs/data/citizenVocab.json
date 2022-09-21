@@ -38,9 +38,23 @@
 
         "attorneyFamilyName": "schema:familyName",
         "attorneyGivenName": "schema:givenName",
+        "attorneyAddressStreet": "schema:streetAddress",
+        "attorneyAddressTown": "schema:addressLocality",
+        "attorneyAddressRegion": "schema:addressRegion",
+        "attorneyAddressCountry": "schema:addressCountry",
+        "attorneyAddressPostCode": "schema:postalCode",
+
         "donorFamilyName": "schema:familyName",
         "donorGivenName": "schema:givenName",
-        "preferencesInstructions": "schema:description"
+        "donorAddressStreet": "schema:streetAddress",
+        "donorAddressTown": "schema:addressLocality",
+        "donorAddressRegion": "schema:addressRegion",
+        "donorAddressCountry": "schema:addressCountry",
+        "donorAddressPostCode": "schema:postalCode",
+        
+        "preferencesInstructions": "schema:description",
+
+        "lpaType": "schema:Text"
       }
     },
 

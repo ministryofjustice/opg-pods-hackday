@@ -30,15 +30,26 @@ describe("CreateCredential", () => {
         it("it should return a attorney details", async () => {
             expect(credential.signedDocument.credentialSubject.attorneyGivenName).toBe("Alice");
             expect(credential.signedDocument.credentialSubject.attorneyFamilyName).toBe("Smith");
+            expect(credential.signedDocument.credentialSubject.attorneyAddressStreet).toBe("12 Alice Test Street");
+            expect(credential.signedDocument.credentialSubject.attorneyAddressTown).toBe("Selly oak");
+            expect(credential.signedDocument.credentialSubject.attorneyAddressRegion).toBe("Birmingham");
+            expect(credential.signedDocument.credentialSubject.attorneyAddressCountry).toBe("United Kingdom");
+            expect(credential.signedDocument.credentialSubject.attorneyAddressPostCode).toBe("BN12 9RQ");
         });
 
         it("it should return a donors details", async () => {
             expect(credential.signedDocument.credentialSubject.donorGivenName).toBe("Bob");
             expect(credential.signedDocument.credentialSubject.donorFamilyName).toBe("Smith");
+            expect(credential.signedDocument.credentialSubject.donorAddressStreet).toBe("24 Bob Terrace");
+            expect(credential.signedDocument.credentialSubject.donorAddressTown).toBe("Selly oak");
+            expect(credential.signedDocument.credentialSubject.donorAddressRegion).toBe("Birmingham");
+            expect(credential.signedDocument.credentialSubject.donorAddressCountry).toBe("United Kingdom");
+            expect(credential.signedDocument.credentialSubject.donorAddressPostCode).toBe("BN12 9RW");
         });
 
-        it("it should return instructions", async () => {
+        it("it should return instructions and type", async () => {
             expect(credential.signedDocument.credentialSubject.preferencesInstructions).toBe("Some instructions");
+            expect(credential.signedDocument.credentialSubject.lpaType).toBe("Health and Welfare");
         });
     });
 });
