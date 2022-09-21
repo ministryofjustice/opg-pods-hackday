@@ -61,7 +61,7 @@ jobs:
       uses: ./.github/workflows/terraform_environment_job.yml
       with:
         workspace_name: sandbox
-        # version_tag: ${{ needs.create_tags.outputs.version_tag }}
+        version_tag: latest
         working_directory: ./service-revoke/terraform/environment
       secrets: inherit
 
