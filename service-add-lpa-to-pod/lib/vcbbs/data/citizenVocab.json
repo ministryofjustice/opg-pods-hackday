@@ -8,7 +8,7 @@
     "identifier": "http://schema.org/identifier",
     "image": { "@id": "http://schema.org/image", "@type": "@id" },
 
-    "PermanentResidentCard": {
+    "LastingPowerOfAttorney": {
       "@id": "https://w3id.org/citizenship#PermanentResidentCard",
       "@context": {
         "@version": 1.1,
@@ -19,12 +19,11 @@
 
         "description": "http://schema.org/description",
         "name": "http://schema.org/name",
-        "identifier": "http://schema.org/identifier",
-        "image": { "@id": "http://schema.org/image", "@type": "@id" }
+        "identifier": "http://schema.org/identifier"
       }
     },
 
-    "PermanentResident": {
+    "LastingPowerOfAttorneyDocument": {
       "@id": "https://w3id.org/citizenship#PermanentResident",
       "@context": {
         "@version": 1.1,
@@ -37,18 +36,9 @@
         "schema": "http://schema.org/",
         "xsd": "http://www.w3.org/2001/XMLSchema#",
 
-        "birthCountry": "ctzn:birthCountry",
-        "birthDate": { "@id": "schema:birthDate", "@type": "xsd:dateTime" },
-        "commuterClassification": "ctzn:commuterClassification",
         "familyName": "schema:familyName",
-        "gender": "schema:gender",
-        "givenName": "schema:givenName",
-        "lprCategory": "ctzn:lprCategory",
-        "lprNumber": "ctzn:lprNumber",
-        "residentSince": {
-          "@id": "ctzn:residentSince",
-          "@type": "xsd:dateTime"
-        }
+        "attorneyGivenName": "schema:givenName",
+        "preferencesInstructions": "schema:description"
       }
     },
 

@@ -4,12 +4,12 @@
     "https://w3id.org/citizenship/v1",
     "https://w3id.org/security/bbs/v1"
   ],
-  "type": ["VerifiableCredential", "PermanentResidentCard"],
+  "type": ["VerifiableCredential", "LastingPowerOfAttorney"],
   "credentialSubject": {
     "@explicit": true,
-    "type": ["PermanentResident", "Person"],
-    "givenName": {},
+    "type": ["LastingPowerOfAttorneyDocument", "Person"],
+    "attorneyGivenName": {},
     "familyName": {},
-    "gender": {}
+    "preferencesInstructions": {}
   }
 }
