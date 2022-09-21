@@ -15,7 +15,6 @@
   "credentialSubject": {
     "id": "did:opgverifiablecredential:b34ca6cd37bbf23",
     "type": ["LastingPowerOfAttorneyDocument", "Person"],
-
     "attorneyGivenName": "Alice",
     "attorneyFamilyName": "Smith",
     "attorneyAddressStreet": "12 Alice Test Street",
@@ -23,7 +22,6 @@
     "attorneyAddressRegion": "Birmingham",
     "attorneyAddressCountry": "United Kingdom",
     "attorneyAddressPostCode": "BN12 9RQ",
-
     "donorGivenName": "Bob",
     "donorFamilyName": "Smith",
     "donorAddressStreet": "24 Bob Terrace",
@@ -31,8 +29,14 @@
     "donorAddressRegion": "Birmingham",
     "donorAddressCountry": "United Kingdom",
     "donorAddressPostCode": "BN12 9RW",
-
     "preferencesInstructions": "Some instructions",
     "lpaType": "Health and Welfare"
+  },
+  "proof": {
+    "type": "BbsBlsSignature2020",
+    "created": "2022-09-21T15:21:51Z",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "mUtpD7SGpqEK7kbYav18gsmOuExEgygdiq8f5hvn7py0eVvArR3jnDDFgcV1Gl6nYUHlKfzccE4m7waZyoLEkBLFiK2g54Q2i+CdtYBgDdkUDsoULSBMcH1MwGHwdjfXpldFNFrHFx/IAvLVniyeMQ==",
+    "verificationMethod": "did:opgverifiablecredential:489398593#test"
   }
 }
