@@ -75,4 +75,8 @@ module.exports = router => {
     router.get("/lpa/access-permissions", async function(req, res) {
         res.render("lpa-access-permissions", {});
     });
+
+    router.get("/what-is-a-pod", async function(req, res) {
+        res.render("what-is-a-pod", {});
+    });
 };
