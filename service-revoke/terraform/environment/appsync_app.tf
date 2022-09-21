@@ -1,8 +1,14 @@
 resource "aws_appsync_graphql_api" "opg_vc_revocation" {
   provider            = aws.eu_west_1
-  authentication_type = "API_KEY"
   name                = "TerraformBuiltAPI"
-  schema              = <<EOF
+  authentication_type = "API_KEY"
+  xray_enabled        = true
+  log_config {
+    cloudwatch_logs_role_arn = aws_iam_role.opg_vc_revocation.arn
+    field_log_level          = "ALL"
+  }
+
+  schema = <<EOF
 schema {
     query: Query
 }
@@ -33,6 +39,18 @@ resource "aws_dynamodb_table" "opg_vc_revocation" {
     type = "S"
   }
 
+}
+
+resource "aws_appsync_datasource" "opg_vc_revocation" {
+  provider         = aws.eu_west_1
+  api_id           = aws_appsync_graphql_api.opg_vc_revocation.id
+  name             = "TerraformBuiltAPI"
+  service_role_arn = aws_iam_role.opg_vc_revocation.arn
+  type             = "AMAZON_DYNAMODB"
+
+  dynamodb_config {
+    table_name = aws_dynamodb_table.opg_vc_revocation.name
+  }
 }
 
 resource "aws_iam_role" "opg_vc_revocation" {
@@ -85,15 +103,9 @@ resource "aws_iam_role_policy" "opg_vc_revocation" {
 EOF
 }
 
-
-resource "aws_appsync_datasource" "opg_vc_revocation" {
-  provider         = aws.eu_west_1
-  api_id           = aws_appsync_graphql_api.opg_vc_revocation.id
-  name             = "TerraformBuiltAPI"
-  service_role_arn = aws_iam_role.opg_vc_revocation.arn
-  type             = "AMAZON_DYNAMODB"
-
-  dynamodb_config {
-    table_name = aws_dynamodb_table.opg_vc_revocation.name
-  }
+resource "aws_iam_role_policy_attachment" "example" {
+  provider   = aws.eu_west_1
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSAppSyncPushToCloudWatchLogs"
+  role       = aws_iam_role.opg_vc_revocation.name
 }
+
