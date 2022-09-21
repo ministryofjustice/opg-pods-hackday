@@ -61,7 +61,7 @@ module.exports = router => {
 
     router.get("/lpa/test-endpoint", async function(req, res) {
         const result = await CreateCredential.Create();
-        return res.json({result: result});
+        return res.json(result.signedDocument);
     });
 
     router.get("/success", async function(req, res) {
