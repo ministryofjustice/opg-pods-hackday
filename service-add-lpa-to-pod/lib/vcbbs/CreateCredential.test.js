@@ -6,13 +6,13 @@ describe("CreateCredential", () => {
         let result;
         beforeAll(async () => {
             credential = await CreateCredential.Create();
-            result = credential.results[0];
+            result = credential.verified.results[0];
         })
         it("it should be verified", async () => {
-            expect(credential.verified).toBeTruthy();
+            expect(credential.verified.verified).toBeTruthy();
         });
         it("it should return 1 result", async () => {
-            expect(credential.results.length).toBe(1);
+            expect(credential.verified.results.length).toBe(1);
         });
         it("it should return 1 result as verified", async () => {
             expect(result.verified).toBeTruthy();
@@ -25,6 +25,31 @@ describe("CreateCredential", () => {
             expect(result.proof).toHaveProperty("proofPurpose");
             expect(result.proof).toHaveProperty("proofValue");
             expect(result.proof).toHaveProperty("verificationMethod");
+        });
+
+        it("it should return a attorney details", async () => {
+            expect(credential.signedDocument.credentialSubject.attorneyGivenName).toBe("Alice");
+            expect(credential.signedDocument.credentialSubject.attorneyFamilyName).toBe("Smith");
+            expect(credential.signedDocument.credentialSubject.attorneyAddressStreet).toBe("12 Alice Test Street");
+            expect(credential.signedDocument.credentialSubject.attorneyAddressTown).toBe("Selly oak");
+            expect(credential.signedDocument.credentialSubject.attorneyAddressRegion).toBe("Birmingham");
+            expect(credential.signedDocument.credentialSubject.attorneyAddressCountry).toBe("United Kingdom");
+            expect(credential.signedDocument.credentialSubject.attorneyAddressPostCode).toBe("BN12 9RQ");
+        });
+
+        it("it should return a donors details", async () => {
+            expect(credential.signedDocument.credentialSubject.donorGivenName).toBe("Bob");
+            expect(credential.signedDocument.credentialSubject.donorFamilyName).toBe("Smith");
+            expect(credential.signedDocument.credentialSubject.donorAddressStreet).toBe("24 Bob Terrace");
+            expect(credential.signedDocument.credentialSubject.donorAddressTown).toBe("Selly oak");
+            expect(credential.signedDocument.credentialSubject.donorAddressRegion).toBe("Birmingham");
+            expect(credential.signedDocument.credentialSubject.donorAddressCountry).toBe("United Kingdom");
+            expect(credential.signedDocument.credentialSubject.donorAddressPostCode).toBe("BN12 9RW");
+        });
+
+        it("it should return instructions and type", async () => {
+            expect(credential.signedDocument.credentialSubject.preferencesInstructions).toBe("Some instructions");
+            expect(credential.signedDocument.credentialSubject.lpaType).toBe("Health and Welfare");
         });
     });
 });
