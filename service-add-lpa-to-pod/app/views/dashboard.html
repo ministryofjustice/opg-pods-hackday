@@ -24,7 +24,6 @@
             <span class="govuk-hint"><strong>Application number:</strong> {{ data.lpa.applicationNumber }}</span>
             <div class="govuk-button-group">
               <a class="govuk-link govuk-link--no-visited-state" href="/lpa/view">View LPA details</a>
-              <!-- <a download="lpa.jsonld" class="govuk-link govuk-link--no-visited-state" href="/vc-ending/download">Download</a> -->
             </div>
           </section>
         </article>      
@@ -32,5 +31,9 @@
     </div>
   </div>
 
-  {{ govukButton({ href: "/lpa/send-to-pod", text: "Add to POD" }) }}
+  <div class="govuk-button-group">
+    {{ govukButton({ href: "/lpa/send-to-pod", text: "Add to your GOV.UK wallet" }) }}
+    <a href="/what-is-a-pod" class="govuk-link">What does this mean?</a>
+  </div>
+
 {% endblock %}
