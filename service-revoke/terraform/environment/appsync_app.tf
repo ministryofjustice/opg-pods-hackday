@@ -103,9 +103,19 @@ resource "aws_iam_role_policy" "opg_vc_revocation" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "example" {
+resource "aws_iam_role_policy_attachment" "cloudwatch_logs_access" {
   provider   = aws.eu_west_1
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSAppSyncPushToCloudWatchLogs"
   role       = aws_iam_role.opg_vc_revocation.name
 }
 
+resource "aws_cloudwatch_query_definition" "logs" {
+  provider        = aws.eu_west_1
+  name            = "Hackday/Revocation Service/${local.environment_name} appsync logs"
+  log_group_names = ["/aws/appsync/apis/${aws_appsync_graphql_api.opg_vc_revocation.id}"]
+
+  query_string = <<EOF
+fields @timestamp, @message
+| sort @timestamp desc
+EOF
+}
