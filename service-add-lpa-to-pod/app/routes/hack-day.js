@@ -63,4 +63,8 @@ module.exports = router => {
         const result = await CreateCredential.Create();
         return res.json(result.signedDocument);
     });
+
+    router.get("/success", async function(req, res) {
+        res.render("success", {});
+    });
 };
