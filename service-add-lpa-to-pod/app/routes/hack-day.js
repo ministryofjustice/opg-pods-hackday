@@ -152,8 +152,7 @@ module.exports = router => {
             { slug: "mylpa.txt", contentType: "text/plain", fetch: session.fetch }
         );
     
-
-        //return res.ok();
+        res.render("success",{});
         });
 
     router.get("/lpa/test-endpoint", async function(req, res) {
