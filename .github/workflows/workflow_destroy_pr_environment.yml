@@ -6,6 +6,8 @@ on:
       - main
     types:
       - closed
+    paths:
+      - 'service-add-lpa-to-pod/**'
 
 permissions:
   contents: read
