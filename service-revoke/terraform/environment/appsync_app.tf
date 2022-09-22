@@ -8,14 +8,7 @@ resource "aws_appsync_graphql_api" "opg_vc_revocation" {
     field_log_level          = "ALL"
   }
 
-  schema = <<EOF
-schema {
-    query: Query
-}
-type Query {
-  test: Int
-}
-EOF
+  schema = file("../../docs/schema.graphql")
 }
 
 resource "aws_appsync_api_key" "opg_vc_revocation" {
