@@ -5,39 +5,46 @@
 }
 
 type Mutation {
-  createMyModelType(input: CreateMyModelTypeInput!): MyModelType
-  deleteMyModelType(input: DeleteMyModelTypeInput!): MyModelType
-  updateMyModelType(input: UpdateMyModelTypeInput!): MyModelType
+  createVCRevocation(input: CreateVCRevocationInput!): VCRevocation
+  deleteVCRevocation(input: DeleteVCRevocationInput!): VCRevocation
+  updateVCRevocation(input: UpdateVCRevocationInput!): VCRevocation
 }
 
-type MyModelType {
+type VCRevocation {
   id: ID!
   lpaType: String
   type: AWSJSON
 }
 
-type MyModelTypeConnection {
-  items: [MyModelType]
+type VCRevocationConnection {
+  items: [VCRevocation]
   nextToken: String
 }
 
 type Query {
-  getMyModelType(id: ID!): MyModelType
-  listMyModelTypes(filter: TableMyModelTypeFilterInput, limit: Int, nextToken: String): MyModelTypeConnection
+  getVCRevocation(id: ID!): VCRevocation
+  listVCRevocations(
+    filter: TableVCRevocationFilterInput
+    limit: Int
+    nextToken: String
+  ): VCRevocationConnection
 }
 
 type Subscription {
-  onCreateMyModelType(id: ID, lpaType: String, type: AWSJSON): MyModelType @aws_subscribe(mutations : ["createMyModelType"])
-  onDeleteMyModelType(id: ID, lpaType: String, type: AWSJSON): MyModelType @aws_subscribe(mutations : ["deleteMyModelType"])
-  onUpdateMyModelType(id: ID, lpaType: String, type: AWSJSON): MyModelType @aws_subscribe(mutations : ["updateMyModelType"])
+  onCreateVCRevocation(id: ID, lpaType: String, type: AWSJSON): VCRevocation
+    @aws_subscribe(mutations: ["createVCRevocation"])
+  onDeleteVCRevocation(id: ID, lpaType: String, type: AWSJSON): VCRevocation
+    @aws_subscribe(mutations: ["deleteVCRevocation"])
+  onUpdateVCRevocation(id: ID, lpaType: String, type: AWSJSON): VCRevocation
+    @aws_subscribe(mutations: ["updateVCRevocation"])
 }
 
-input CreateMyModelTypeInput {
+input CreateVCRevocationInput {
   lpaType: String
   type: AWSJSON
 }
 
-input DeleteMyModelTypeInput {
+input DeleteVCRevocationInput {
   id: ID!
 }
 
@@ -83,7 +90,7 @@ input TableIntFilterInput {
   notContains: Int
 }
 
-input TableMyModelTypeFilterInput {
+input TableVCRevocationFilterInput {
   id: TableIDFilterInput
   lpaType: TableStringFilterInput
 }
@@ -101,7 +108,7 @@ input TableStringFilterInput {
   notContains: String
 }
 
-input UpdateMyModelTypeInput {
+input UpdateVCRevocationInput {
   id: ID!
   lpaType: String
   type: AWSJSON
