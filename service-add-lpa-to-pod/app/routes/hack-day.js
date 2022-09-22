@@ -27,8 +27,32 @@ module.exports = router => {
         }
     }
 
+    const lpaTechData = {
+        data: {
+            lpa: {
+                donor: {
+                    fullname: "Luke Jolliffe" 
+                },
+                attorney: {
+                    fullname: "Alice Smith"
+                },
+                decisions: {
+                    instructions: "Be good",
+                    preferences: "Do what I ask"
+                },
+                lpaType: "Health and welfare LPA",
+                applicationNumber: 10238756382
+            } 
+        }
+    }
+
     router.get("/dashboard", function(req, res) {
         res.render("dashboard", lpaData);
+    });
+
+    router.get("/dashboard-tech-demo", function(req, res) {
+        
+        res.render("dashboard-tech-demo", lpaTechData);
     });
 
     router.get("/lpa/view", function(req, res) {
