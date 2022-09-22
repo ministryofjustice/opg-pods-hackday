@@ -1,0 +1,115 @@
+﻿schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Mutation {
+  createVCRevocation(input: CreateVCRevocationInput!): VCRevocation
+  deleteVCRevocation(input: DeleteVCRevocationInput!): VCRevocation
+  updateVCRevocation(input: UpdateVCRevocationInput!): VCRevocation
+}
+
+type VCRevocation {
+  id: ID!
+  lpaType: String
+  type: AWSJSON
+}
+
+type VCRevocationConnection {
+  items: [VCRevocation]
+  nextToken: String
+}
+
+type Query {
+  getVCRevocation(id: ID!): VCRevocation
+  listVCRevocations(
+    filter: TableVCRevocationFilterInput
+    limit: Int
+    nextToken: String
+  ): VCRevocationConnection
+}
+
+type Subscription {
+  onCreateVCRevocation(id: ID, lpaType: String, type: AWSJSON): VCRevocation
+    @aws_subscribe(mutations: ["createVCRevocation"])
+  onDeleteVCRevocation(id: ID, lpaType: String, type: AWSJSON): VCRevocation
+    @aws_subscribe(mutations: ["deleteVCRevocation"])
+  onUpdateVCRevocation(id: ID, lpaType: String, type: AWSJSON): VCRevocation
+    @aws_subscribe(mutations: ["updateVCRevocation"])
+}
+
+input CreateVCRevocationInput {
+  lpaType: String
+  type: AWSJSON
+}
+
+input DeleteVCRevocationInput {
+  id: ID!
+}
+
+input TableBooleanFilterInput {
+  eq: Boolean
+  ne: Boolean
+}
+
+input TableFloatFilterInput {
+  between: [Float]
+  contains: Float
+  eq: Float
+  ge: Float
+  gt: Float
+  le: Float
+  lt: Float
+  ne: Float
+  notContains: Float
+}
+
+input TableIDFilterInput {
+  beginsWith: ID
+  between: [ID]
+  contains: ID
+  eq: ID
+  ge: ID
+  gt: ID
+  le: ID
+  lt: ID
+  ne: ID
+  notContains: ID
+}
+
+input TableIntFilterInput {
+  between: [Int]
+  contains: Int
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+  notContains: Int
+}
+
+input TableVCRevocationFilterInput {
+  id: TableIDFilterInput
+  lpaType: TableStringFilterInput
+}
+
+input TableStringFilterInput {
+  beginsWith: String
+  between: [String]
+  contains: String
+  eq: String
+  ge: String
+  gt: String
+  le: String
+  lt: String
+  ne: String
+  notContains: String
+}
+
+input UpdateVCRevocationInput {
+  id: ID!
+  lpaType: String
+  type: AWSJSON
+}
