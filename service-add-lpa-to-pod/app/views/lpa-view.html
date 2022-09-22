@@ -16,7 +16,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     {{ govukPanel({
-      titleText: data.lpa.donor.fullname + "'s " + data.lpa.lpaType + " LPA"
+      titleText: data.lpa.donor.fullname + "'s " + data.lpa.lpaType
     }) }}
 
     {{ govukSummaryList({
@@ -31,26 +31,10 @@
         },
         {
           key: {
-            text: "First attorney"
+            text: "Attorney"
           },
           value: {
             text: data.lpa.attorney.fullname
-          }
-        },
-        {
-          key: {
-            text: "Second attorney"
-          },
-          value: {
-            text: data.lpa.attorney2.fullname
-          }
-        },
-        {
-          key: {
-            text: "Replacement attorney"
-          },
-          value: {
-            text: data.lpa.replacementAttorney.fullname
           }
         },
         {
