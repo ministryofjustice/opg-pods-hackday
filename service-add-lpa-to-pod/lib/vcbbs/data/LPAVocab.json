@@ -1,0 +1,63 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@protected": true,
+
+    "name": "http://schema.org/name",
+    "description": "http://schema.org/description",
+    "identifier": "http://schema.org/identifier",
+    "image": { "@id": "http://schema.org/image", "@type": "@id" },
+
+    "LastingPowerOfAttorney": {
+      "@id": "https://w3id.org/citizenship#PermanentResidentCard",
+      "@context": {
+        "@version": 1.1,
+        "@protected": true,
+
+        "id": "@id",
+        "type": "@type",
+
+        "description": "http://schema.org/description",
+        "name": "http://schema.org/name",
+        "identifier": "http://schema.org/identifier"
+      }
+    },
+
+    "LastingPowerOfAttorneyDocument": {
+      "@id": "https://w3id.org/citizenship#PermanentResident",
+      "@context": {
+        "@version": 1.1,
+        "@protected": true,
+
+        "id": "@id",
+        "type": "@type",
+
+        "ctzn": "https://w3id.org/citizenship#",
+        "schema": "http://schema.org/",
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+        "attorneyFamilyName": "schema:familyName",
+        "attorneyGivenName": "schema:givenName",
+        "attorneyAddressStreet": "schema:streetAddress",
+        "attorneyAddressTown": "schema:addressLocality",
+        "attorneyAddressRegion": "schema:addressRegion",
+        "attorneyAddressCountry": "schema:addressCountry",
+        "attorneyAddressPostCode": "schema:postalCode",
+
+        "donorFamilyName": "schema:familyName",
+        "donorGivenName": "schema:givenName",
+        "donorAddressStreet": "schema:streetAddress",
+        "donorAddressTown": "schema:addressLocality",
+        "donorAddressRegion": "schema:addressRegion",
+        "donorAddressCountry": "schema:addressCountry",
+        "donorAddressPostCode": "schema:postalCode",
+        
+        "preferencesInstructions": "schema:description",
+
+        "lpaType": "schema:Text"
+      }
+    },
+
+    "Person": "http://schema.org/Person"
+  }
+}
