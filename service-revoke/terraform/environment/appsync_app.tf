@@ -119,3 +119,7 @@ fields @timestamp, @message
 | sort @timestamp desc
 EOF
 }
+
+output "app_fqdn" {
+  value = aws_appsync_graphql_api.opg_vc_revocation.uris[0]
+}
