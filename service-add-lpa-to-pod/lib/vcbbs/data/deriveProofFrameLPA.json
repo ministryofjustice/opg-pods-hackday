@@ -1,0 +1,30 @@
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://vocab.publicguardian.gov.uk/schema/v1",
+    "https://w3id.org/security/bbs/v1"
+  ],
+  "type": ["VerifiableCredential", "LastingPowerOfAttorney"],
+  "credentialSubject": {
+    "@explicit": true,
+    "type": ["LastingPowerOfAttorneyDocument", "Person"],
+    "attorneyFamilyName": {},
+    "attorneyGivenName": {},
+    "attorneyAddressStreet": {},
+    "attorneyAddressTown": {},
+    "attorneyAddressRegion": {},
+    "attorneyAddressCountry": {},
+    "attorneyAddressPostCode": {},
+
+    "donorFamilyName": {},
+    "donorGivenName": {},
+    "donorAddressStreet": {},
+    "donorAddressTown": {},
+    "donorAddressRegion": {},
+    "donorAddressCountry": {},
+    "donorAddressPostCode": {},
+
+    "preferencesInstructions": {},
+    "lpaType": {}
+  }
+}

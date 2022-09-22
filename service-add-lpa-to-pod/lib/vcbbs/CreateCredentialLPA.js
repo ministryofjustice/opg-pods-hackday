@@ -10,7 +10,7 @@ const inputDocument = require("./data/inputDocumentLPA.json");
 const keyPairOptions = require("./data/keyPair.json");
 const exampleControllerDoc = require("./data/controllerDocument.json");
 const bbsContext = require("./data/bbs.json");
-const revealDocument = require("./data/deriveProofFrame.json");
+const revealDocument = require("./data/deriveProofFrameLPA.json");
 const LPAVocab = require("./data/LPAVocab.json");
 const credentialContext = require("./data/credentialsContext.json");
 const suiteContext = require("./data/suiteContext.json");
@@ -20,7 +20,7 @@ const documents = {
     "did:opgverifiablecredential:489398593#test": keyPairOptions,
     "did:opgverifiablecredential:489398593": exampleControllerDoc,
     "https://w3id.org/security/bbs/v1": bbsContext,
-    "https://w3id.org/citizenship/v1": LPAVocab,
+    "https://vocab.publicguardian.gov.uk/schema/v1": LPAVocab,
     "https://www.w3.org/2018/credentials/v1": credentialContext,
     "https://w3id.org/security/suites/jws-2020/v1": suiteContext,
 };
