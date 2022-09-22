@@ -8,23 +8,8 @@
   "credentialSubject": {
     "@explicit": true,
     "type": ["LastingPowerOfAttorneyDocument", "Person"],
-    "attorneyFamilyName": {},
-    "attorneyGivenName": {},
-    "attorneyAddressStreet": {},
-    "attorneyAddressTown": {},
-    "attorneyAddressRegion": {},
-    "attorneyAddressCountry": {},
-    "attorneyAddressPostCode": {},
-
-    "donorFamilyName": {},
-    "donorGivenName": {},
-    "donorAddressStreet": {},
-    "donorAddressTown": {},
-    "donorAddressRegion": {},
-    "donorAddressCountry": {},
-    "donorAddressPostCode": {},
-
-    "preferencesInstructions": {},
-    "lpaType": {}
+    "attorney": {
+      "familyName": {}
+    }
   }
 }

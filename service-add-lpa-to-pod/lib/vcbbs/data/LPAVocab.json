@@ -9,7 +9,7 @@
     "image": { "@id": "http://schema.org/image", "@type": "@id" },
 
     "LastingPowerOfAttorney": {
-      "@id": "https://vocab.publicguardian.gov.uk/schema/v1",
+      "@id": "https://vocab.publicguardian.gov.uk/schema/v1#LastingPowerOfAttorney",
       "@context": {
         "@version": 1.1,
         "@protected": true,
@@ -24,7 +24,7 @@
     },
 
     "LastingPowerOfAttorneyDocument": {
-      "@id": "https://vocab.publicguardian.gov.uk/schema/v1",
+      "@id": "https://vocab.publicguardian.gov.uk/schema/v1#LastingPowerOfAttorneyDocument",
       "@context": {
         "@version": 1.1,
         "@protected": true,
@@ -35,29 +35,31 @@
         "ctzn": "https://w3id.org/citizenship#",
         "schema": "http://schema.org/",
         "xsd": "http://www.w3.org/2001/XMLSchema#",
+        "lpa": "https://vocab.publicguardian.gov.uk/schema/v1",
 
-        "attorneyFamilyName": "schema:familyName",
-        "attorneyGivenName": "schema:givenName",
-        "attorneyAddressStreet": "schema:streetAddress",
-        "attorneyAddressTown": "schema:addressLocality",
-        "attorneyAddressRegion": "schema:addressRegion",
-        "attorneyAddressCountry": "schema:addressCountry",
-        "attorneyAddressPostCode": "schema:postalCode",
-
-        "donorFamilyName": "schema:familyName",
-        "donorGivenName": "schema:givenName",
-        "donorAddressStreet": "schema:streetAddress",
-        "donorAddressTown": "schema:addressLocality",
-        "donorAddressRegion": "schema:addressRegion",
-        "donorAddressCountry": "schema:addressCountry",
-        "donorAddressPostCode": "schema:postalCode",
-        
-        "preferencesInstructions": "schema:description",
-
-        "lpaType": "schema:Text"
+        "attorney": {
+          "@id": "https://vocab.publicguardian.gov.uk/schema/v1#LastingPowerOfAttorneyActor",
+          "@type": "lpa:LastingPowerOfAttorneyActor"
+        }
       }
     },
 
-    "Person": "http://schema.org/Person"
+    "LastingPowerOfAttorneyActor": {
+      "@id": "https://vocab.publicguardian.gov.uk/schema/v1#LastingPowerOfAttorneyActor",
+      "@context": {
+        "@version": 1.1,
+        "@protected": true,
+
+        "id": "@id",
+        "type": "@type",
+
+        "ctzn": "https://w3id.org/citizenship#",
+        "schema": "http://schema.org/",
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+        "lpa": "https://vocab.publicguardian.gov.uk/schema/v1",
+
+        "familyName": "schema:familyName"
+      }
+    }
   }
 }

@@ -16,23 +16,8 @@
     "id": "did:opgverifiablecredential:b34ca6cd37bbf23",
     "type": ["LastingPowerOfAttorneyDocument", "Person"],
 
-    "attorneyGivenName": "Alice",
-    "attorneyFamilyName": "Smith",
-    "attorneyAddressStreet": "12 Alice Test Street",
-    "attorneyAddressTown": "Selly oak",
-    "attorneyAddressRegion": "Birmingham",
-    "attorneyAddressCountry": "United Kingdom",
-    "attorneyAddressPostCode": "BN12 9RQ",
-
-    "donorGivenName": "Bob",
-    "donorFamilyName": "Smith",
-    "donorAddressStreet": "24 Bob Terrace",
-    "donorAddressTown": "Selly oak",
-    "donorAddressRegion": "Birmingham",
-    "donorAddressCountry": "United Kingdom",
-    "donorAddressPostCode": "BN12 9RW",
-
-    "preferencesInstructions": "Some instructions",
-    "lpaType": "Health and Welfare"
+    "attorney": {
+      "familyName": "Smith"
+    }
   }
 }
