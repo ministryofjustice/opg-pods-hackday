@@ -12,6 +12,7 @@ type Mutation {
 
 type MyModelType {
   id: ID!
+  vcId: String
   lpaType: String
   type: AWSJSON
 }
@@ -23,16 +24,37 @@ type MyModelTypeConnection {
 
 type Query {
   getMyModelType(id: ID!): MyModelType
-  listMyModelTypes(filter: TableMyModelTypeFilterInput, limit: Int, nextToken: String): MyModelTypeConnection
+  listMyModelTypes(
+    filter: TableMyModelTypeFilterInput
+    limit: Int
+    nextToken: String
+  ): MyModelTypeConnection
 }
 
 type Subscription {
-  onCreateMyModelType(id: ID, lpaType: String, type: AWSJSON): MyModelType @aws_subscribe(mutations : ["createMyModelType"])
-  onDeleteMyModelType(id: ID, lpaType: String, type: AWSJSON): MyModelType @aws_subscribe(mutations : ["deleteMyModelType"])
-  onUpdateMyModelType(id: ID, lpaType: String, type: AWSJSON): MyModelType @aws_subscribe(mutations : ["updateMyModelType"])
+  onCreateMyModelType(
+    id: ID
+    vcId: String
+    lpaType: String
+    type: AWSJSON
+  ): MyModelType @aws_subscribe(mutations: ["createMyModelType"])
+  onDeleteMyModelType(
+    id: ID
+    vcId: String
+    lpaType: String
+    type: AWSJSON
+  ): MyModelType @aws_subscribe(mutations: ["deleteMyModelType"])
+  onUpdateMyModelType(
+    id: ID
+    vcId: String
+    lpaType: String
+    type: AWSJSON
+  ): MyModelType @aws_subscribe(mutations: ["updateMyModelType"])
 }
 
 input CreateMyModelTypeInput {
+  id: ID!
+  vcId: String
   lpaType: String
   type: AWSJSON
 }
@@ -103,6 +125,7 @@ input TableStringFilterInput {
 
 input UpdateMyModelTypeInput {
   id: ID!
+  vcId: String
   lpaType: String
   type: AWSJSON
 }
