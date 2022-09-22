@@ -7,58 +7,31 @@ const THIS_URL = process.env.THIS_URL || 'http://localhost:3000';
 
 module.exports = router => {
 
-    router.get("/dashboard", function(req, res) {
-        res.render("dashboard", {
-            data: {
-                lpa: {
-                    donor: {
-                        fullname: "Alex Saunders" 
-                    },
-                    attorney: {
-                        fullname: "Bob Smith"
-                    },
-                    attorney2: {
-                        fullname: "Bobbette Smith"
-                    },
-                    replacementAttorney: {
-                        fullname: "Bobbetta Smith"
-                    },
-                    decisions: {
-                        instructions: "Be good",
-                        preferences: "Do what I ask"
-                    },
-                    lpaType: "Health and welfare LPA",
-                    applicationNumber: 10238756382
-                } 
+    const lpaData = {
+        data: {
+            lpa: {
+                donor: {
+                    fullname: "Alex Saunders" 
+                },
+                attorney: {
+                    fullname: "Alice Smith"
+                },
+                decisions: {
+                    instructions: "Be good",
+                    preferences: "Do what I ask"
+                },
+                lpaType: "Health and welfare LPA",
+                applicationNumber: 10238756382
             } 
-        });
+        }
+    }
+
+    router.get("/dashboard", function(req, res) {
+        res.render("dashboard", lpaData);
     });
 
     router.get("/lpa/view", function(req, res) {
-        res.render("lpa-view", {
-            data: {
-                lpa: {
-                    donor: {
-                        fullname: "Alex Saunders" 
-                    },
-                    attorney: {
-                        fullname: "Bob Smith"
-                    },
-                    attorney2: {
-                        fullname: "Bobbette Smith"
-                    },
-                    replacementAttorney: {
-                        fullname: "Bobbetta Smith"
-                    },
-                    decisions: {
-                        instructions: "Be good",
-                        preferences: "Do what I ask"
-                    },
-                    lpaType: "Property and Finance",
-                    applicationNumber: 10238756382
-                } 
-            } 
-        });
+        res.render("lpa-view", lpaData);
     });
 
     router.get("/lpa/send-to-pod", async function(req, res) {
@@ -174,5 +147,9 @@ module.exports = router => {
 
     router.get("/what-is-a-pod", async function(req, res) {
         res.render("what-is-a-pod", {});
+    });
+
+    router.get("/dashboard-added", async function(req, res) {
+        res.render("dashboard-added", lpaData);
     });
 };
