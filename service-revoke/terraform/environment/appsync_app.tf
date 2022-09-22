@@ -1,6 +1,6 @@
 resource "aws_appsync_graphql_api" "opg_vc_revocation" {
   provider            = aws.eu_west_1
-  name                = "${local.environment_name}-TerraformBuiltAPI"
+  name                = "${local.environment_name}TerraformBuiltAPI"
   authentication_type = "API_KEY"
   xray_enabled        = true
   log_config {
@@ -26,7 +26,7 @@ resource "aws_appsync_api_key" "opg_vc_revocation" {
 
 resource "aws_dynamodb_table" "opg_vc_revocation" {
   provider       = aws.eu_west_1
-  name           = "${local.environment_name}-TerraformBuiltAPITable"
+  name           = "${local.environment_name}TerraformBuiltAPITable"
   billing_mode   = "PAY_PER_REQUEST"
   hash_key       = "id"
   stream_enabled = null
@@ -44,7 +44,7 @@ resource "aws_dynamodb_table" "opg_vc_revocation" {
 resource "aws_appsync_datasource" "opg_vc_revocation" {
   provider         = aws.eu_west_1
   api_id           = aws_appsync_graphql_api.opg_vc_revocation.id
-  name             = "${local.environment_name}-TerraformBuiltAPI"
+  name             = "${local.environment_name}TerraformBuiltAPI"
   service_role_arn = aws_iam_role.opg_vc_revocation.arn
   type             = "AMAZON_DYNAMODB"
 
@@ -55,7 +55,7 @@ resource "aws_appsync_datasource" "opg_vc_revocation" {
 
 resource "aws_iam_role" "opg_vc_revocation" {
   provider = aws.eu_west_1
-  name     = "${local.environment_name}-terraform_built_api_role"
+  name     = "${local.environment_name}terraform_built_api_role"
   path     = "/service-role/"
 
   assume_role_policy = <<EOF
@@ -76,7 +76,7 @@ EOF
 
 resource "aws_iam_role_policy" "opg_vc_revocation" {
   provider = aws.eu_west_1
-  name     = "${local.environment_name}-opg_vc_revocation"
+  name     = "${local.environment_name}opg_vc_revocation"
   role     = aws_iam_role.opg_vc_revocation.id
 
   policy = <<EOF
