@@ -1,19 +1,23 @@
-﻿schema {
-  query: Query
-  mutation: Mutation
-  subscription: Subscription
+﻿input CreateVCRevocationInput {
+  id: String
+  issuanceDate: AWSDateTime
+  expirationDate: AWSDateTime
+}
+
+input DeleteVCRevocationInput {
+  id: String
 }
 
 type Mutation {
   createVCRevocation(input: CreateVCRevocationInput!): VCRevocation
-  deleteVCRevocation(input: DeleteVCRevocationInput!): VCRevocation
   updateVCRevocation(input: UpdateVCRevocationInput!): VCRevocation
+  deleteVCRevocation(input: DeleteVCRevocationInput!): VCRevocation
 }
 
 type VCRevocation {
-  id: ID!
-  lpaType: String
-  type: AWSJSON
+  id: String
+  issuanceDate: AWSDateTime
+  expirationDate: AWSDateTime
 }
 
 type VCRevocationConnection {
@@ -22,7 +26,7 @@ type VCRevocationConnection {
 }
 
 type Query {
-  getVCRevocation(id: ID!): VCRevocation
+  getVCRevocation(id: String): VCRevocation
   listVCRevocations(
     filter: TableVCRevocationFilterInput
     limit: Int
@@ -31,85 +35,86 @@ type Query {
 }
 
 type Subscription {
-  onCreateVCRevocation(id: ID, lpaType: String, type: AWSJSON): VCRevocation
-    @aws_subscribe(mutations: ["createVCRevocation"])
-  onDeleteVCRevocation(id: ID, lpaType: String, type: AWSJSON): VCRevocation
-    @aws_subscribe(mutations: ["deleteVCRevocation"])
-  onUpdateVCRevocation(id: ID, lpaType: String, type: AWSJSON): VCRevocation
-    @aws_subscribe(mutations: ["updateVCRevocation"])
-}
-
-input CreateVCRevocationInput {
-  lpaType: String
-  type: AWSJSON
-}
-
-input DeleteVCRevocationInput {
-  id: ID!
+  onCreateVCRevocation(
+    id: String
+    issuanceDate: AWSDateTime
+    expirationDate: AWSDateTime
+  ): VCRevocation @aws_subscribe(mutations: ["createVCRevocation"])
+  onUpdateVCRevocation(
+    id: String
+    issuanceDate: AWSDateTime
+    expirationDate: AWSDateTime
+  ): VCRevocation @aws_subscribe(mutations: ["updateVCRevocation"])
+  onDeleteVCRevocation(
+    id: String
+    issuanceDate: AWSDateTime
+    expirationDate: AWSDateTime
+  ): VCRevocation @aws_subscribe(mutations: ["deleteVCRevocation"])
 }
 
 input TableBooleanFilterInput {
-  eq: Boolean
   ne: Boolean
+  eq: Boolean
 }
 
 input TableFloatFilterInput {
-  between: [Float]
-  contains: Float
+  ne: Float
   eq: Float
-  ge: Float
-  gt: Float
   le: Float
   lt: Float
-  ne: Float
+  ge: Float
+  gt: Float
+  contains: Float
   notContains: Float
+  between: [Float]
 }
 
 input TableIDFilterInput {
-  beginsWith: ID
-  between: [ID]
-  contains: ID
+  ne: ID
   eq: ID
-  ge: ID
-  gt: ID
   le: ID
   lt: ID
-  ne: ID
+  ge: ID
+  gt: ID
+  contains: ID
   notContains: ID
+  between: [ID]
+  beginsWith: ID
 }
 
 input TableIntFilterInput {
-  between: [Int]
-  contains: Int
+  ne: Int
   eq: Int
-  ge: Int
-  gt: Int
   le: Int
   lt: Int
-  ne: Int
+  ge: Int
+  gt: Int
+  contains: Int
   notContains: Int
+  between: [Int]
 }
 
 input TableVCRevocationFilterInput {
-  id: TableIDFilterInput
-  lpaType: TableStringFilterInput
+  id: TableStringFilterInput
+  issuanceDate: TableStringFilterInput
+  expirationDate: TableStringFilterInput
 }
 
 input TableStringFilterInput {
-  beginsWith: String
-  between: [String]
-  contains: String
+  ne: String
   eq: String
-  ge: String
-  gt: String
   le: String
   lt: String
-  ne: String
+  ge: String
+  gt: String
+  contains: String
   notContains: String
+  between: [String]
+  beginsWith: String
 }
 
 input UpdateVCRevocationInput {
-  id: ID!
-  lpaType: String
-  type: AWSJSON
+  id: String
+  issuanceDate: AWSDateTime
+  expirationDate: AWSDateTime
 }
