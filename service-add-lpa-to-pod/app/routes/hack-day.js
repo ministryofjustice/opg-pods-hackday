@@ -70,15 +70,17 @@ module.exports = router => {
         //login to session with application credentials.
         await session.login({
             oidcIssuer: "https://login.inrupt.com/",
-            clientId: "3441b0c9-e34b-478b-ba2b-63eca9b79207",
-            clientSecret: "c01259dd-7c70-4a81-a45e-cb86b58cef89",
+            // clientId: "3441b0c9-e34b-478b-ba2b-63eca9b79207",
+            // clientSecret: "c01259dd-7c70-4a81-a45e-cb86b58cef89",
+            clientId: '3243eb6f-698d-4d3d-ac55-8884906c96ca',
+            clientSecret: 'a4ff1e55-c8e3-46e4-9629-4252b9480645'
         });
 
         //Get List of available pods
-        const availablePods = await client.getPodUrlAll(session.info.webId, { fetch: session.fetch });
+        //const availablePods = await client.getPodUrlAll(session.info.webId, { fetch: session.fetch });
         
         //get enpoint for access request
-        const accessEndpoint = await access.getAccessApiEndpoint(availablePods[0] + "govuk/lpas/");
+        const accessEndpoint = await access.getAccessApiEndpoint('https://storage.inrupt.com/b8f7b741-9b95-4dc6-a186-42ab1fb458a6/' + "govuk/lpas/");
 
         //issue request
         const accessRequest = await access.issueAccessRequest(
@@ -88,8 +90,10 @@ module.exports = router => {
                 write: true,
             },
             purpose: "https://example.com/purposes#print",
-            resourceOwner: session.info.webId,
-            resources: [availablePods[0] + "/govuk/lpas/"],
+            resourceOwner: 'https://id.inrupt.com/lukejolliffe',
+            resources: [
+                'https://storage.inrupt.com/b8f7b741-9b95-4dc6-a186-42ab1fb458a6/' + "govuk/lpas/",
+            ],
             },
             {
             fetch: session.fetch,
@@ -118,13 +122,15 @@ module.exports = router => {
         //Login to session again with application credentials
         await session.login({
             oidcIssuer: "https://login.inrupt.com/",
-            clientId: "3441b0c9-e34b-478b-ba2b-63eca9b79207",
-            clientSecret: "c01259dd-7c70-4a81-a45e-cb86b58cef89",
+            // clientId: "3441b0c9-e34b-478b-ba2b-63eca9b79207",
+            // clientSecret: "c01259dd-7c70-4a81-a45e-cb86b58cef89",
+            clientId: '3243eb6f-698d-4d3d-ac55-8884906c96ca',
+            clientSecret: 'a4ff1e55-c8e3-46e4-9629-4252b9480645',
             tokenType: 'Bearer'
         });
 
         //Get available pods
-        const mypods = await client.getPodUrlAll(session.info.webId, { fetch: session.fetch });
+        //const mypods = await client.getPodUrlAll(session.info.webId, { fetch: session.fetch });
 
 
         //Create the verifyable credential
@@ -154,9 +160,10 @@ module.exports = router => {
         
         //Save to container
         try {
-            await client.saveFileInContainer(
-                mypods[0] + 'govuk/lpas/',
+            await access.saveFileInContainer(
+                'https://storage.inrupt.com/b8f7b741-9b95-4dc6-a186-42ab1fb458a6/' + 'govuk/lpas/',
                 Buffer.from(JSON.stringify(lpaCredential.signedDocument)),
+                accessGrant,
                 { slug: lpaCredential.signedDocument.credentialSubject.donorFamilyName + "lpaVC.json", contentType: "application/json", fetch: session.fetch }
             );
         } catch (error) {
