@@ -121,5 +121,5 @@ EOF
 }
 
 output "app_fqdn" {
-  value = aws_appsync_graphql_api.opg_vc_revocation.uris[0]
+  value = aws_appsync_graphql_api.opg_vc_revocation.uris["GRAPHQL"]
 }
