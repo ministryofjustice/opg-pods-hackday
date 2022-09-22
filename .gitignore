@@ -4,3 +4,4 @@
 **/.terraform/
 **/terraform.tfstate.d/
 **/.infracost/
+**/aws-exports.js
