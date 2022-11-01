@@ -1,0 +1,109 @@
+﻿schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Mutation {
+  createVCRevocationManual(input: CreateVCRevocationManualInput!): VCRevocationManual
+  deleteVCRevocationManual(input: DeleteVCRevocationManualInput!): VCRevocationManual
+  updateVCRevocationManual(input: UpdateVCRevocationManualInput!): VCRevocationManual
+}
+
+type Query {
+  getVCRevocationManual(id: String!): VCRevocationManual
+  listVCRevocationManuals(filter: TableVCRevocationManualFilterInput, limit: Int, nextToken: String): VCRevocationManualConnection
+}
+
+type Subscription {
+  onCreateVCRevocationManual(expirationDate: String, id: String, issuanceDate: String): VCRevocationManual @aws_subscribe(mutations : ["createVCRevocationManual"])
+  onDeleteVCRevocationManual(expirationDate: String, id: String, issuanceDate: String): VCRevocationManual @aws_subscribe(mutations : ["deleteVCRevocationManual"])
+  onUpdateVCRevocationManual(expirationDate: String, id: String, issuanceDate: String): VCRevocationManual @aws_subscribe(mutations : ["updateVCRevocationManual"])
+}
+
+type VCRevocationManual {
+  expirationDate: String
+  id: String!
+  issuanceDate: String!
+}
+
+type VCRevocationManualConnection {
+  items: [VCRevocationManual]
+  nextToken: String
+}
+
+input CreateVCRevocationManualInput {
+  expirationDate: String
+  issuanceDate: String!
+}
+
+input DeleteVCRevocationManualInput {
+  id: String!
+}
+
+input TableBooleanFilterInput {
+  eq: Boolean
+  ne: Boolean
+}
+
+input TableFloatFilterInput {
+  between: [Float]
+  contains: Float
+  eq: Float
+  ge: Float
+  gt: Float
+  le: Float
+  lt: Float
+  ne: Float
+  notContains: Float
+}
+
+input TableIDFilterInput {
+  beginsWith: ID
+  between: [ID]
+  contains: ID
+  eq: ID
+  ge: ID
+  gt: ID
+  le: ID
+  lt: ID
+  ne: ID
+  notContains: ID
+}
+
+input TableIntFilterInput {
+  between: [Int]
+  contains: Int
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+  notContains: Int
+}
+
+input TableStringFilterInput {
+  beginsWith: String
+  between: [String]
+  contains: String
+  eq: String
+  ge: String
+  gt: String
+  le: String
+  lt: String
+  ne: String
+  notContains: String
+}
+
+input TableVCRevocationManualFilterInput {
+  expirationDate: TableStringFilterInput
+  id: TableStringFilterInput
+  issuanceDate: TableStringFilterInput
+}
+
+input UpdateVCRevocationManualInput {
+  expirationDate: String
+  id: String!
+  issuanceDate: String
+}

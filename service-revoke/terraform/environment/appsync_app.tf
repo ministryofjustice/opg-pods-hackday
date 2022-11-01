@@ -8,7 +8,7 @@ resource "aws_appsync_graphql_api" "opg_vc_revocation" {
     field_log_level          = "ALL"
   }
 
-  schema = file("../../docs/schema.graphql")
+  schema = file("../../docs/vcrevocations.graphql")
 }
 
 resource "aws_appsync_api_key" "opg_vc_revocation" {
@@ -22,9 +22,10 @@ resource "aws_dynamodb_table" "opg_vc_revocation" {
   name           = "${local.environment_name}TerraformBuiltAPITable"
   billing_mode   = "PAY_PER_REQUEST"
   hash_key       = "id"
-  stream_enabled = null
+  stream_enabled = false
   server_side_encryption {
-    enabled = true
+    enabled     = true
+    kms_key_arn = "arn:aws:kms:eu-west-1:995199299616:key/57f44be0-8c17-48db-8ef9-d87b57214538"
   }
 
   attribute {
@@ -38,6 +39,7 @@ resource "aws_appsync_datasource" "opg_vc_revocation" {
   provider         = aws.eu_west_1
   api_id           = aws_appsync_graphql_api.opg_vc_revocation.id
   name             = "${local.environment_name}TerraformBuiltAPI"
+  description      = "DynamoDB table backing the VCRevocationManual object type."
   service_role_arn = aws_iam_role.opg_vc_revocation.arn
   type             = "AMAZON_DYNAMODB"
 
@@ -50,6 +52,9 @@ resource "aws_iam_role" "opg_vc_revocation" {
   provider = aws.eu_west_1
   name     = "${local.environment_name}terraform_built_api_role"
   path     = "/service-role/"
+  managed_policy_arns = [
+    aws_iam_policy.opg_vc_revocation.arn,
+  ]
 
   assume_role_policy = <<EOF
 {
@@ -67,40 +72,64 @@ resource "aws_iam_role" "opg_vc_revocation" {
 EOF
 }
 
-resource "aws_iam_role_policy" "opg_vc_revocation" {
-  provider = aws.eu_west_1
-  name     = "${local.environment_name}opg_vc_revocation"
-  role     = aws_iam_role.opg_vc_revocation.id
+resource "aws_iam_policy" "opg_vc_revocation" {
+  provider    = aws.eu_west_1
+  name        = "${local.environment_name}terraform_built_api_policy"
+  path        = "/service-role/"
+  description = "Allows the AWS AppSync service to access your data source."
 
-  policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "dynamodb:DeleteItem",
-                "dynamodb:GetItem",
-                "dynamodb:PutItem",
-                "dynamodb:Query",
-                "dynamodb:Scan",
-                "dynamodb:UpdateItem"
-            ],
-            "Resource": [
-                "${aws_dynamodb_table.opg_vc_revocation.arn}",
-                "${aws_dynamodb_table.opg_vc_revocation.arn}/*"
-            ]
-        }
+  # Terraform's "jsonencode" function converts a
+  # Terraform expression result to valid JSON syntax.
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "dynamodb:*",
+          # "dynamodb:GetItem",
+          # "dynamodb:PutItem",
+          # "dynamodb:Query",
+          # "dynamodb:Scan",
+          # "dynamodb:UpdateItem"
+        ],
+        Effect = "Allow"
+        Resource = [
+          "${aws_dynamodb_table.opg_vc_revocation.arn}",
+          "${aws_dynamodb_table.opg_vc_revocation.arn}/*"
+        ]
+      },
     ]
-}
-EOF
+  })
 }
 
-resource "aws_iam_role_policy_attachment" "cloudwatch_logs_access" {
-  provider   = aws.eu_west_1
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSAppSyncPushToCloudWatchLogs"
-  role       = aws_iam_role.opg_vc_revocation.name
-}
+# resource "aws_iam_role_policy" "opg_vc_revocation" {
+#   provider = aws.eu_west_1
+#   name     = "${local.environment_name}opg_vc_revocation"
+#   role     = aws_iam_role.opg_vc_revocation.id
+
+#   policy = <<EOF
+# {
+#     "Version": "2012-10-17",
+#     "Statement": [
+#         {
+#             "Effect": "Allow",
+#             "Action": [
+#                 "dynamodb:DeleteItem",
+#                 "dynamodb:GetItem",
+#                 "dynamodb:PutItem",
+#                 "dynamodb:Query",
+#                 "dynamodb:Scan",
+#                 "dynamodb:UpdateItem"
+#             ],
+#             "Resource": [
+#                 "${aws_dynamodb_table.opg_vc_revocation.arn}",
+#                 "${aws_dynamodb_table.opg_vc_revocation.arn}/*"
+#             ]
+#         }
+#     ]
+# }
+# EOF
+# }
 
 resource "aws_cloudwatch_query_definition" "logs" {
   provider        = aws.eu_west_1

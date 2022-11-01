@@ -27,6 +27,17 @@ locals {
 }
 
 provider "aws" {
+  region = "eu-west-1"
+  default_tags {
+    tags = local.default_tags
+  }
+  assume_role {
+    role_arn     = "arn:aws:iam::${local.sandbox_account_id}:role/${var.default_role}"
+    session_name = "opg-pods-hackday-terraform-session"
+  }
+}
+
+provider "aws" {
   alias  = "eu_west_1"
   region = "eu-west-1"
   default_tags {
