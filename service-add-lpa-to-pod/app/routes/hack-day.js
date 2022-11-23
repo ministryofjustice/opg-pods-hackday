@@ -18,8 +18,8 @@ module.exports = router => {
                     fullname: "Alice Smith"
                 },
                 decisions: {
-                    instructions: "Be good",
-                    preferences: "Do what I ask"
+                    instructions: "I only want my attorneys to move me to a care home if, in my doctor’s opinion, I can no longer live independently.",
+                    preferences: "None"
                 },
                 lpaType: "Health and welfare LPA",
                 applicationNumber: 10238756382
